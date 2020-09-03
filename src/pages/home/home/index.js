@@ -15,6 +15,10 @@ export default class HomeComponent extends React.Component {
     componentDidMount() {
     }
 
+    goPage(pUrl) {
+        this.props.history.push(config.path + pUrl);
+    }
+
     render() {
         return (
             <div>
@@ -26,15 +30,15 @@ export default class HomeComponent extends React.Component {
                     </Switch>
                 </React.Fragment>
                 <div className={Css['bottom-nav']}>
-                    <ul>
+                    <ul onClick={this.goPage.bind(this, 'home/index')}>
                         <li className={Css['home'] + " " + Css['active']}></li>
                         <li className={Css['text'] + " " + Css['active']}>首页</li>
                     </ul>
-                    <ul>
+                    <ul onClick={this.goPage.bind(this, 'home/cart')}>
                         <li className={Css['cart']}></li>
                         <li className={Css['text']}>购物车</li>
                     </ul>
-                    <ul>
+                    <ul onClick={this.goPage.bind(this, 'home/user')}>
                         <li className={Css['my']}></li>
                         <li className={Css['text']}>我的</li>
                     </ul>
