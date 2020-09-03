@@ -9,14 +9,54 @@ const UserComponent = lazy(()=>import("../../user/index/index"));
 export default class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            bHomeStyle: false, // 用于判断在哪个页面
+            bCartStyle: true,
+            bMyStyle: false
+        }
     }
 
-    componentDidMount() {
+    // 将要装载，在render之前调用；
+    componentWillMount() {
+        this.handleNavStyle(this.props)
+    }
+
+    // 路由变化时判断
+    componentWillReceiveProps(newProps) {
+        this.handleNavStyle(newProps);
     }
 
     goPage(pUrl) {
-        this.props.history.push(config.path + pUrl);
+        this.props.history.replace(config.path + pUrl);
+    }
+
+    handleNavStyle(props) {
+        switch (props.location.pathname) {
+            case config.path+"home/index":
+                this.setState({
+                    bHomeStyle: true,
+                    bCartStyle: false,
+                    bMyStyle: false
+                });
+                break;
+            case config.path+"home/cart":
+                this.setState({
+                    bHomeStyle: false,
+                    bCartStyle: true,
+                    bMyStyle: false
+                });
+                break;
+            case config.path+"home/my":
+                this.setState({
+                    bHomeStyle: false,
+                    bCartStyle: false,
+                    bMyStyle: true
+                });
+                break;
+            default:
+                break;
+        }
+        console.log(this.props.location.pathname)
     }
 
     render() {
@@ -26,21 +66,21 @@ export default class HomeComponent extends React.Component {
                     <Switch>
                         <Route path={config.path + 'home/index'} component={IndexComponent}/>
                         <Route path={config.path + 'home/cart'} component={CartComponent}/>
-                        <Route path={config.path + 'home/user'} component={UserComponent}/>
+                        <Route path={config.path + 'home/my'} component={UserComponent}/>
                     </Switch>
                 </React.Fragment>
                 <div className={Css['bottom-nav']}>
                     <ul onClick={this.goPage.bind(this, 'home/index')}>
-                        <li className={Css['home'] + " " + Css['active']}></li>
-                        <li className={Css['text'] + " " + Css['active']}>首页</li>
+                        <li className={this.state.bHomeStyle ? Css['home'] + " " + Css['active'] : Css['home']}></li>
+                        <li className={this.state.bHomeStyle ? Css['text'] + " " + Css['active'] : Css['text']}>首页</li>
                     </ul>
                     <ul onClick={this.goPage.bind(this, 'home/cart')}>
-                        <li className={Css['cart']}></li>
-                        <li className={Css['text']}>购物车</li>
+                        <li className={this.state.bCartStyle ? Css['cart'] + " " + Css['active'] : Css['cart']}></li>
+                        <li className={this.state.bCartStyle ? Css['text'] + " " + Css['active'] : Css['text']}>购物车</li>
                     </ul>
-                    <ul onClick={this.goPage.bind(this, 'home/user')}>
-                        <li className={Css['my']}></li>
-                        <li className={Css['text']}>我的</li>
+                    <ul onClick={this.goPage.bind(this, 'home/my')}>
+                        <li className={this.state.bMyStyle ? Css['my'] + " " + Css['active'] : Css['my']}></li>
+                        <li className={this.state.bMyStyle ? Css['text'] + " " + Css['active'] : Css['text']}>我的</li>
                     </ul>
                 </div>
             </div>
