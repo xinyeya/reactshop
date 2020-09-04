@@ -16,12 +16,16 @@ export default class HomeComponent extends React.Component {
         }
     }
 
-    // 将要装载，在render之前调用；
+    // 在挂载之前被调用。
+    // 它在 render() 之前调用，因此在此方法中同步调用 setState() 不会触发额外渲染。
+    // 通常，我们建议使用 constructor() 来初始化 state。
     componentWillMount() {
         this.handleNavStyle(this.props)
     }
 
-    // 路由变化时判断
+    // UNSAFE_componentWillReceiveProps() 会在已挂载的组件接收新的 props 之前被调用。
+    // 如果你需要更新状态以响应 prop 更改（例如，重置它），
+    // 你可以比较 this.props 和 nextProps 并在此方法中使用 this.setState() 执行 state 转换。
     componentWillReceiveProps(newProps) {
         this.handleNavStyle(newProps);
     }
