@@ -1,0 +1,8 @@
+{
+  "presets": ["react", "es2015"],
+  "env": {
+    "dev": {
+      "plugins": ["transform-runtime", ["import", { "libraryName": "antd-mobile", "style": true }]] //style参数css时加载css文件，true时加载less
+    }
+  }
+}
