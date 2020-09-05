@@ -1,32 +1,34 @@
 import React from "react";
 import Css from "../../../assets/css/home/index/index.module.css";
 import { Carousel } from 'antd-mobile';
+import config from "../../../assets/js/conf/config";
+import {request} from "../../../assets/js/libs/request";
 
 class IndexComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: ['1', '2', '3'],
+            SwiperData: [],
             imgHeight: 176,
         }
     }
 
     componentDidMount() {
-        // simulate img loading
-        setTimeout(() => {
-            // this.setState({
-                // data: ['AiyWuByWklrrUDlFignR', 'TekJlZRVCjLFexlOCuWn', 'IJOtIlfsYdTyaDTRVrLI'],
-            // });
-        }, 100);
+        this.getSwiper();
     }
 
-    beforeChange(from, to) {
-        console.log(`slide from ${from} to ${to}`)
+    // 获取轮播图数据
+    getSwiper() {
+        request("http://vueshop.glbuys.com/api/home/index/slide?token=1ec949a15fb709370f")
+        .then(res=>{
+            if (res.code === 200) {
+                this.setState({
+                    SwiperData: res.data
+                });
+            }
+        });
     }
 
-    afterChange(index) {
-        console.log('slide to', index)
-    }
     imgOnload() {
         // fire window resize event to change height
         window.dispatchEvent(new Event('resize'));
@@ -53,25 +55,27 @@ class IndexComponent extends React.Component {
                 {/*轮播图*/}
                 <div className={Css['swiper-wrap']}>
                     <Carousel
-                        autoplay={false}
+                        autoplay={true}
                         infinite
-                        beforeChange={this.beforeChange.bind(this)}
-                        afterChange={this.afterChange.bind(this)}
                     >
-                        {this.state.data.map(val => (
-                            <a
-                                key={val}
-                                href="http://www.baidu.com"
-                                style={swiperBox}
-                            >
+                        {/*遍历数据*/}
+                        {this.state.SwiperData.length >= 1 && this.state.SwiperData.map((val, key) => {
+                            return (
+                                <a
+                                    key={key}
+                                    href={val.webs}
+                                    style={swiperBox}
+                                >
                                 <img
-                                    src={`http://vueshop.glbuys.com/uploadfiles/1484285302.jpg`}
-                                    alt=""
+                                    src={`http:${val.image}`}
+                                    alt={val.title}
                                     style={swiperImage}
                                     onLoad={this.imgOnload.bind(this)}
                                 />
-                            </a>
-                        ))}
+                                </a>
+                            )
+                        }
+                        )}
                     </Carousel>
                 </div>
                 {/*导航分类*/}
