@@ -42,6 +42,7 @@
 .bottom-nav ul li.text{
     font-size: 0.6rem;
     text-align: center;
+    width: auto;
 }
 
 /*点击后的文字颜色*/

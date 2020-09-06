@@ -60,7 +60,6 @@ export default class HomeComponent extends React.Component {
             default:
                 break;
         }
-        console.log(this.props.location.pathname)
     }
 
     render() {

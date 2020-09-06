@@ -76,6 +76,11 @@ class IndexComponent extends React.Component {
         })
     }
 
+    // 跳转分类页面
+    pushPage(pUrl) {
+        this.props.history.replace(config.path + pUrl);
+    }
+
     render() {
         // 轮播图外框样式
         const swiperBox = { display: 'inline-block', width: '100%', height: this.state.imgHeight }
@@ -84,7 +89,7 @@ class IndexComponent extends React.Component {
             <div className={Css['page']}>
                 {/*头部搜索栏*/}
                 <div className={Css["search-header"] + " " + Css['red-bg']}>
-                    <div className={Css['classify-icon']}></div>
+                    <div className={Css['classify-icon']} onClick={this.pushPage.bind(this, "goods/classify")}></div>
                     <div className={Css['search-wrap']}>
                         <div className={Css['search-icon']}></div>
                         <div className={Css['search-text']}>请输入宝贝名称</div>
