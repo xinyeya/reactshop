@@ -38,6 +38,10 @@ class GoodsItems extends React.Component {
                         lazyImg();
                     })
                 });
+            }else{
+                this.setState({
+                    aGoods: []
+                })
             }
         })
     }
@@ -59,7 +63,7 @@ class GoodsItems extends React.Component {
             <div id={"goods-content-main"} className={Css['goods-content-main']}>
                 <div>
                     {
-                        this.state.aGoods !== null && this.state.aGoods.map((val, key)=>{
+                        this.state.aGoods.length > 0 ? this.state.aGoods.map((val, key)=>{
                             return (
                                 <div key={key} className={Css['goods-wrap']}>
                                     {/*标题*/}
@@ -83,7 +87,9 @@ class GoodsItems extends React.Component {
                                     </div>
                                 </div>
                             )
-                        })
+                        }) : <div className={Css['null-item']}>
+                            没有相关商品！
+                        </div>
                     }
                 </div>
             </div>
