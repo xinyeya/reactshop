@@ -3,6 +3,7 @@ import React from "react";
 import config from "../../../assets/js/conf/config";
 import Css from "../../../assets/css/home/goods/items.module.css";
 import IScroll from 'iscroll/build/iscroll-probe';
+import {lazyImg, localParam} from "../../../assets/js/utils/util"
 import {request} from "../../../assets/js/libs/request";
 
 class GoodsItems extends React.Component {
@@ -10,25 +11,33 @@ class GoodsItems extends React.Component {
         super(props);
         this.state = {
             aGoods: []
-        }
+        };
         this.scroll = null;
     }
 
     componentDidMount() {
-        console.log(this.props.location)
-        this.getData();
+        this.getData(this.props);
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.getData(newProps);
     }
 
     // 获取数据
-    getData() {
-        request(config.baseUrl+"/api/home/category/show?cid=493&token="+config.token).then(res=>{
+    getData(props) {
+        // 获取get传过来的值
+        let cid = props.location.search ? localParam(props.location.search).search.cid : '';
+        request(config.baseUrl+"/api/home/category/show?cid="+cid+"&token="+config.token).then(res=>{
             if (res.code === 200) {
                 this.setState({
                     aGoods: res.data
                 }, ()=>{
                     this.eventScroll();
+                    lazyImg();
+                    this.scroll.on("scrollEnd", ()=>{
+                        lazyImg();
+                    })
                 });
-                console.log(res.data)
             }
         })
     }
@@ -62,7 +71,7 @@ class GoodsItems extends React.Component {
                                                 return (
                                                     <ul key={key1}>
                                                         <li className={Css['image']}>
-                                                            <img src={val1.image} alt=""/>
+                                                            <img data-echo={val1.image} src={require("../../../assets/images/common/lazyImg.jpg")} alt=""/>
                                                         </li>
                                                         <li>
                                                             {val1.title}
