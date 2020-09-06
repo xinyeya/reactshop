@@ -36,14 +36,15 @@
     display: flex;
     display: -webkit-flex;
     margin-right: 3%;
-    justify-content: space-between;
-    -webkit-justify-content: space-between;
 }
 /*左侧分类盒子*/
 .goods-main .classify-wrap{
     width: 4.3rem;
     height: 100%;
     overflow: hidden;
+    margin-right: 3%;
+    position: relative;
+    z-index: 1;
 }
 /*左侧分类子盒子*/
 .goods-main .classify-wrap .classify-item{

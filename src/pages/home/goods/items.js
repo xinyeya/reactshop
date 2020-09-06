@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React from "react";
 import config from "../../../assets/js/conf/config";
 import Css from "../../../assets/css/home/goods/items.module.css";
