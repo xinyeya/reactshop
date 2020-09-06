@@ -68,7 +68,24 @@ class ClassifyComponent extends React.Component {
             this.aTempClassify[i].bActive = false;
         }
         this.aTempClassify[pIndex].bActive = true;
+        this.handleScroll(pIndex);
         this.replacePage(pUrl, pIndex);
+    }
+
+    // 滑动条跳转到某个位置
+    handleScroll(pIndex) {
+        // 整个分类盒子的高度
+        let oScrollClassify = document.getElementById("scroll-classify");
+        // 得出点击的单元格与最底层的距离
+        let iTopHeight = Math.round(this.refs['item-'+pIndex].offsetHeight*pIndex);
+        // 计算盒子三分之一的高度
+        let iHalfHeight = Math.round(oScrollClassify.offsetHeight / 3);
+        // 计算下面部分三分之一的长度
+        let iBottomHeight = Math.round(oScrollClassify.scrollHeight-iTopHeight);
+        // 判断上半部分和下半部分
+        if (iTopHeight > iHalfHeight && iBottomHeight>oScrollClassify.offsetHeight) {
+            this.scroll.scrollTo(0, -iTopHeight, 300, IScroll.utils.ease.elastic);
+        }
     }
 
     render() {
@@ -87,7 +104,7 @@ class ClassifyComponent extends React.Component {
                             {
                                 this.state.aClassify !== null && this.state.aClassify.map((val, key)=>{
                                     return (
-                                        <div key={key} className={val.bActive === true?Css['classify-item'] + " " + Css['active'] : Css['classify-item']} onClick={this.changeStyle.bind(this, `goods/classify/items?cid=${val.cid} `, key)}>{val.title}</div>
+                                        <div ref={"item-"+key} key={key} className={val.bActive === true?Css['classify-item'] + " " + Css['active'] : Css['classify-item']} onClick={this.changeStyle.bind(this, `goods/classify/items?cid=${val.cid} `, key)}>{val.title}</div>
                                     )
                                 })
                             }
