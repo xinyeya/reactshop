@@ -5,18 +5,19 @@ import {Route, Switch} from 'react-router-dom';
 import config from "../../../assets/js/conf/config";
 import IScroll from 'iscroll/build/iscroll-probe';
 import {request} from "../../../assets/js/libs/request";
+import {localParam} from "../../../assets/js/utils/util";
 const GoodsItems = lazy(()=>import("./items"));
 
 class ClassifyComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            aClassify: null,
+            aClassify: [],
         };
         this.scroll = null;
         this.aTempClassify = [];
+        this.cid = props.location.search ? localParam(props.location.search).search.cid : '492';
     }
-
 
     componentDidMount() {
         this.getClassifyData();
@@ -24,7 +25,8 @@ class ClassifyComponent extends React.Component {
 
     // 返回上一层
     goBack() {
-        this.props.history.goBack();
+        console.log('1111')
+        this.props.history.replace(config.path+"home/index");
     }
 
     // 兼容ios滑动条
@@ -51,6 +53,7 @@ class ClassifyComponent extends React.Component {
                     aClassify: this.aTempClassify
                 },()=>{
                     this.eventScroll();
+                    this.defaultClassifyStyle();
                 })
             }
         });
@@ -86,6 +89,21 @@ class ClassifyComponent extends React.Component {
         if (iTopHeight > iHalfHeight && iBottomHeight>oScrollClassify.offsetHeight) {
             this.scroll.scrollTo(0, -iTopHeight, 300, IScroll.utils.ease.elastic);
         }
+    }
+
+    // 默认红色的样式
+    defaultClassifyStyle() {
+        if (this.aTempClassify.length > 0) {
+            for (let i=0; i<this.aTempClassify.length; i++) {
+                if (this.aTempClassify[i].cid === this.cid) {
+                    this.aTempClassify[i].bActive = true;
+                    break;
+                }
+            }
+        }
+        this.setState({
+            aClassify: this.aTempClassify
+        })
     }
 
     render() {
