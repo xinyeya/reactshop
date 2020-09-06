@@ -89,7 +89,7 @@ class IndexComponent extends React.Component {
             <div className={Css['page']}>
                 {/*头部搜索栏*/}
                 <div className={Css["search-header"] + " " + Css['red-bg']}>
-                    <div className={Css['classify-icon']} onClick={this.pushPage.bind(this, "goods/classify")}></div>
+                    <div className={Css['classify-icon']} onClick={this.pushPage.bind(this, "goods/classify/items")}></div>
                     <div className={Css['search-wrap']}>
                         <div className={Css['search-icon']}></div>
                         <div className={Css['search-text']}>请输入宝贝名称</div>
