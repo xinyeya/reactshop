@@ -9,11 +9,25 @@ class SearchComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            bHistory: true
+            bHistory: true,
+            aHotKeyWords: []
         }
     }
 
     componentDidMount() {
+        this.getHotKeyWords();
+    }
+
+    // 获取热门搜索数据
+    getHotKeyWords() {
+        request(config.baseUrl+'/api/home/public/hotwords?token='+config.token).then(res=>{
+            if (res.code === 200) {
+                this.setState({
+                    aHotKeyWords: res.data
+                });
+                console.log(res.data)
+            }
+        })
     }
 
     // 清理搜索记录
@@ -68,17 +82,15 @@ class SearchComponent extends React.Component {
                     <div className={Css['search-title-wrap']}>
                         <div className={Css['search-title']}>热门搜索</div>
                     </div>
-                    {/*搜索记录*/}
+                    {/*热门搜索单个*/}
                     <div className={Css['search-keywords-wrap']}>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
+                        {
+                            this.state.aHotKeyWords.length > 0 ? this.state.aHotKeyWords.map((val, key)=>{
+                                return (
+                                    <div key={key} className={Css['keywords']}>{val.title}</div>
+                                )
+                            }) : ""
+                        }
                     </div>
                 </div>
             </div>
