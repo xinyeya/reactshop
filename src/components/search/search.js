@@ -4,6 +4,7 @@ import {request} from "../../assets/js/libs/request";
 import Css from './search.module.css';
 import "../../assets/css/common/public.css";
 import { Modal } from 'antd-mobile';
+import {connect} from 'react-redux'
 
 class SearchComponent extends React.Component {
     constructor(props) {
@@ -48,14 +49,16 @@ class SearchComponent extends React.Component {
     // 添加历史记录
     addHistoryKeywords() {
         //去重
-        for (let i=0; i<this.aKeywords.length; i++) {
+        for (let i=0; i < this.aKeywords.length; i++) {
             if (this.aKeywords[i] === this.state.keywords) {
                 // 删除现在这一个
                 this.aKeywords.splice(i--, 1)
             }
         }
-        this.aKeywords.unshift(this.state.aKeywords);
-        console.log(this.aKeywords)
+        this.aKeywords.unshift(this.state.keywords);
+        // 存储值到redux
+        this.props.dispatch({type: "addHK", keywords: this.aKeywords})
+
     }
 
     render() {
@@ -84,15 +87,13 @@ class SearchComponent extends React.Component {
                     </div>
                     {/*搜索记录*/}
                     <div className={Css['search-keywords-wrap']}>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
-                        <div className={Css['keywords']}>大码女装</div>
+                        {
+                            this.props.state.hk.keywords != null ? this.props.state.hk.keywords.map((val, key)=>{
+                                return (
+                                    <div key={key} className={Css['keywords']}>{val}</div>
+                                )
+                            }) : ""
+                        }
                     </div>
                 </div>
                 {/*搜索推荐盒子*/}
@@ -117,4 +118,8 @@ class SearchComponent extends React.Component {
     }
 }
 
-export default SearchComponent;
+export default connect((state)=>{
+    return {
+        state: state
+    }
+})(SearchComponent);

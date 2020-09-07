@@ -1,15 +1,44 @@
 /*eslint-disable*/
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Router from './router';
+import {createStore, combineReducers} from 'redux';
+import {Provider} from "react-redux";
 import "babel-polyfill";
 import 'url-search-params-polyfill';
-import Router from './router';
 import "whatwg-fetch"; // 解决兼容性
 import * as serviceWorker from './serviceWorker';
-import "./assets/css/common/public.css"
+import "./assets/css/common/public.css";
+
+function hkReducer(state={keywords: []}, action) {
+    switch (action.type) {
+        case "addHK":
+            return Object.assign({}, state, action);
+        default:
+            return state;
+    }
+}
+
+let reducers = combineReducers({
+    hk: hkReducer
+});
+
+let store = createStore(reducers);
+
+class App extends React.Component{
+    render() {
+        return (
+            <React.Fragment>
+                <Provider store={store}>
+                    <Router />
+                </Provider>
+            </React.Fragment>
+        )
+    }
+}
 
 ReactDOM.render(
-    <Router />,
+    <App />,
   document.getElementById('root')
 );
 
