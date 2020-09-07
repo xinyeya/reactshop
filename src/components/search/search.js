@@ -22,11 +22,11 @@ class SearchComponent extends React.Component {
         // 判断搜索历史
         if (this.aKeywords.length > 0) {
             this.setState({
-                bHistory: true
+                bHistory: false
             })
         }else{
             this.setState({
-                bHistory: false
+                bHistory: true
             })
         }
         this.getHotKeyWords();
@@ -103,7 +103,7 @@ class SearchComponent extends React.Component {
                     {/*搜索记录*/}
                     <div className={Css['search-keywords-wrap']}>
                         {
-                            this.props.state.hk.keywords != null ? this.props.state.hk.keywords.map((val, key)=>{
+                            this.props.state.hk.keywords !== null ? this.props.state.hk.keywords.map((val, key)=>{
                                 return (
                                     <div key={key} className={Css['keywords']}>{val}</div>
                                 )
