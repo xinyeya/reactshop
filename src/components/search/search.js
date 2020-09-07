@@ -13,8 +13,8 @@ class SearchComponent extends React.Component {
             bHistory: true,
             aHotKeyWords: [],
             keywords: ''
-        }
-        this.aKeywords = []
+        };
+        this.aKeywords = props.state.hk.keywords;
     }
 
     componentDidMount() {
@@ -56,9 +56,10 @@ class SearchComponent extends React.Component {
             }
         }
         this.aKeywords.unshift(this.state.keywords);
+        // 将数据存储到本地缓存
+        localStorage['hk'] = JSON.stringify(this.aKeywords);
         // 存储值到redux
         this.props.dispatch({type: "addHK", keywords: this.aKeywords})
-
     }
 
     render() {

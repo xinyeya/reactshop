@@ -10,7 +10,9 @@ import "whatwg-fetch"; // 解决兼容性
 import * as serviceWorker from './serviceWorker';
 import "./assets/css/common/public.css";
 
-function hkReducer(state={keywords: []}, action) {
+let aKeywords = localStorage['hk'] !== undefined ? JSON.parse(localStorage['hk']) : [];
+
+function hkReducer(state={keywords: aKeywords}, action) {
     switch (action.type) {
         case "addHK":
             return Object.assign({}, state, action);
