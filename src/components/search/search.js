@@ -10,8 +10,10 @@ class SearchComponent extends React.Component {
         super(props);
         this.state = {
             bHistory: true,
-            aHotKeyWords: []
+            aHotKeyWords: [],
+            keywords: ''
         }
+        this.aKeywords = []
     }
 
     componentDidMount() {
@@ -43,6 +45,19 @@ class SearchComponent extends React.Component {
         ]);
     }
 
+    // 添加历史记录
+    addHistoryKeywords() {
+        //去重
+        for (let i=0; i<this.aKeywords.length; i++) {
+            if (this.aKeywords[i] === this.state.keywords) {
+                // 删除现在这一个
+                this.aKeywords.splice(i--, 1)
+            }
+        }
+        this.aKeywords.unshift(this.state.aKeywords);
+        console.log(this.aKeywords)
+    }
+
     render() {
         return (
             <div style={{display: this.props.pageStyle}} className={Css['page']} onClick={this.props.childStyle.bind(this, {display: "none"})}>
@@ -51,9 +66,13 @@ class SearchComponent extends React.Component {
                     <div className={Css['close']}></div>
                     <div className={Css['search-wrap']}>
                         <div className={Css['search-input-wrap']}>
-                            <input type="text" className={Css['search']} placeholder={"请输入宝贝名称"}/>
+                            <input type="text" className={Css['search']} placeholder={"请输入宝贝名称"} onChange={e=>{
+                                this.setState({
+                                    keywords: e.target.value
+                                })
+                            }}/>
                         </div>
-                        <button type={"button"} className={Css['search-btn']}></button>
+                        <button type={"button"} className={Css['search-btn']} onClick={this.addHistoryKeywords.bind(this)}></button>
                     </div>
                 </div>
                 {/*搜索记录盒子*/}
