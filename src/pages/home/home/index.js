@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, {lazy, Suspense} from "react";
 import {Route, Switch} from 'react-router-dom';
 import Css from '../../../assets/css/home/home/index.module.css';

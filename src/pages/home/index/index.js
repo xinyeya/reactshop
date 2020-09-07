@@ -1,8 +1,10 @@
+/*eslint-disable*/
 import React from "react";
 import Css from "../../../assets/css/home/index/index.module.css";
 import { Carousel } from 'antd-mobile';
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
+import SearchComponent from "../../../components/search/search";
 
 class IndexComponent extends React.Component {
     constructor(props) {
@@ -12,7 +14,8 @@ class IndexComponent extends React.Component {
             imgHeight: 176, // 轮播图高
             aNav: null, // 首页导航
             aGoods: null, // 首页产品
-            aReco: null
+            aReco: null,
+            pageStyle: {display: "none"}
         }
     }
 
@@ -25,7 +28,6 @@ class IndexComponent extends React.Component {
 
     // 获取轮播图数据
     getSwiper() {
-        // console.log(config.baseUrl + "/home/index/slide?token=" + config.token)
         request(config.baseUrl + "/api/home/index/slide?token=" + config.token)
         .then(res=>{
             if (res.code === 200) {
@@ -81,6 +83,20 @@ class IndexComponent extends React.Component {
         this.props.history.replace(config.path + pUrl);
     }
 
+    // 改变搜索显示或隐藏
+    changeSearch() {
+        this.setState({
+            pageStyle: {display: "block"}
+        })
+    }
+
+    // 获取子组件传递的样式的值
+    getStyle(val) {
+        this.setState({
+            pageStyle: val
+        })
+    }
+
     render() {
         // 轮播图外框样式
         const swiperBox = { display: 'inline-block', width: '100%', height: this.state.imgHeight }
@@ -90,7 +106,7 @@ class IndexComponent extends React.Component {
                 {/*头部搜索栏*/}
                 <div className={Css["search-header"] + " " + Css['red-bg']}>
                     <div className={Css['classify-icon']} onClick={this.pushPage.bind(this, "goods/classify/items")}></div>
-                    <div className={Css['search-wrap']}>
+                    <div className={Css['search-wrap']} onClick={this.changeSearch.bind(this)}>
                         <div className={Css['search-icon']}></div>
                         <div className={Css['search-text']}>请输入宝贝名称</div>
                     </div>
@@ -278,6 +294,8 @@ class IndexComponent extends React.Component {
                         }):""
                     }
                 </div>
+                {/*  搜索组件  */}
+                <SearchComponent pageStyle={this.state.pageStyle} childStyle={this.getStyle.bind(this)}></SearchComponent>
             </div>
         );
     }

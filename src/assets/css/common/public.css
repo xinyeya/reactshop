@@ -64,3 +64,31 @@ html, body{
         font-size: 54.61px !important;
     }
 }
+
+.load{
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url("../../images/common/load.gif");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: fixed;
+    z-index: 999;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, 50%);
+    display: none;
+}
+.null-item{
+    width: auto;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    text-align: center;
+}
+.am-modal-body{
+    color: #000000!important;
+}
+.hide{
+    display: none;
+}
