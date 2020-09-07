@@ -4,13 +4,14 @@ import {request} from "../../assets/js/libs/request";
 import Css from './search.module.css';
 import "../../assets/css/common/public.css";
 import { Modal } from 'antd-mobile';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import action from "../../actions";
 
 class SearchComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            bHistory: true,
+            bHistory: false,
             aHotKeyWords: [],
             keywords: ''
         };
@@ -18,6 +19,16 @@ class SearchComponent extends React.Component {
     }
 
     componentDidMount() {
+        // 判断搜索历史
+        if (this.aKeywords.length > 0) {
+            this.setState({
+                bHistory: true
+            })
+        }else{
+            this.setState({
+                bHistory: false
+            })
+        }
         this.getHotKeyWords();
     }
 
@@ -28,7 +39,6 @@ class SearchComponent extends React.Component {
                 this.setState({
                     aHotKeyWords: res.data
                 });
-                console.log(res.data)
             }
         })
     }
@@ -40,7 +50,11 @@ class SearchComponent extends React.Component {
             { text: '确定', onPress: () => {
                     this.setState({
                         bHistory: false
-                    })
+                    });
+                    // 删除本地缓存
+                    localStorage.removeItem('hk');
+                    this.props.dispatch(action.hk.addHistoryKeywords({keywords: []}));
+                    this.aKeywords = [];
                 }
             },
         ]);
@@ -59,15 +73,15 @@ class SearchComponent extends React.Component {
         // 将数据存储到本地缓存
         localStorage['hk'] = JSON.stringify(this.aKeywords);
         // 存储值到redux
-        this.props.dispatch({type: "addHK", keywords: this.aKeywords})
+        this.props.dispatch(action.hk.addHistoryKeywords({keywords: this.aKeywords}))
     }
 
     render() {
         return (
-            <div style={{display: this.props.pageStyle}} className={Css['page']} onClick={this.props.childStyle.bind(this, {display: "none"})}>
+            <div style={{display: this.props.pageStyle.display}} className={Css['page']}>
                 {/*头部*/}
                 <div className={Css['search-header']}>
-                    <div className={Css['close']}></div>
+                    <div className={Css['close']} onClick={this.props.childStyle.bind(this, {display: "none"})}></div>
                     <div className={Css['search-wrap']}>
                         <div className={Css['search-input-wrap']}>
                             <input type="text" className={Css['search']} placeholder={"请输入宝贝名称"} onChange={e=>{
@@ -80,7 +94,7 @@ class SearchComponent extends React.Component {
                     </div>
                 </div>
                 {/*搜索记录盒子*/}
-                <div className={this.state.bHistory ? Css['search-main'] : Css['search-main'] + ' hide'}>
+                <div className={this.state.bHistory ? Css['search-main'] + ' hide' : Css['search-main']}>
                     {/*最近搜索标题*/}
                     <div className={Css['search-title-wrap']}>
                         <div className={Css['search-title']}>最近搜索</div>

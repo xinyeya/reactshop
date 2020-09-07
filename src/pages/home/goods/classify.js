@@ -7,12 +7,14 @@ import IScroll from 'iscroll/build/iscroll-probe';
 import {request} from "../../../assets/js/libs/request";
 import {localParam} from "../../../assets/js/utils/util";
 const GoodsItems = lazy(()=>import("./items"));
+import SearchComponent from "../../../components/search/search";
 
 class ClassifyComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             aClassify: [],
+            pageStyle: {display: "none"}
         };
         this.scroll = null;
         this.aTempClassify = [];
@@ -106,13 +108,27 @@ class ClassifyComponent extends React.Component {
         })
     }
 
+    // 改变搜索显示或隐藏
+    changeSearch() {
+        this.setState({
+            pageStyle: {display: "block"}
+        })
+    }
+
+    // 获取子组件传递的样式的值
+    getStyle(val) {
+        this.setState({
+            pageStyle: val
+        });
+    }
+
     render() {
         return (
             <div>
                 {/*顶部搜搜索栏与返回按钮*/}
                 <div className={Css['search-header']}>
-                    <div className={Css['back']} onClick={this.goBack.bind(this)}></div>
-                    <div className={Css['search']}>请输入名称</div>
+                    <div className={Css['back']} onClick={this.goBack.bind(this, {display: "none"})}></div>
+                    <div className={Css['search']} onClick={this.changeSearch.bind(this)}>请输入名称</div>
                 </div>
                 {/*左侧*/}
                 <div className={Css['goods-main']}>
@@ -134,6 +150,7 @@ class ClassifyComponent extends React.Component {
                         </Switch>
                     </div>
                 </div>
+                <SearchComponent pageStyle={this.state.pageStyle} childStyle={this.getStyle.bind(this)}></SearchComponent>
             </div>
         );
     }

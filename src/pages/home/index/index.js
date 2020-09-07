@@ -94,7 +94,7 @@ class IndexComponent extends React.Component {
     getStyle(val) {
         this.setState({
             pageStyle: val
-        })
+        });
     }
 
     render() {

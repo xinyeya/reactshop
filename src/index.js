@@ -2,28 +2,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './router';
-import {createStore, combineReducers} from 'redux';
+import {createStore} from 'redux';
 import {Provider} from "react-redux";
 import "babel-polyfill";
 import 'url-search-params-polyfill';
 import "whatwg-fetch"; // 解决兼容性
 import * as serviceWorker from './serviceWorker';
 import "./assets/css/common/public.css";
-
-let aKeywords = localStorage['hk'] !== undefined ? JSON.parse(localStorage['hk']) : [];
-
-function hkReducer(state={keywords: aKeywords}, action) {
-    switch (action.type) {
-        case "addHK":
-            return Object.assign({}, state, action);
-        default:
-            return state;
-    }
-}
-
-let reducers = combineReducers({
-    hk: hkReducer
-});
+import reducers from "./reducers";
 
 let store = createStore(reducers);
 
