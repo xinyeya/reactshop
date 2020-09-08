@@ -1,4 +1,5 @@
 import React from "react";
+import {withRouter} from 'react-router'
 import config from "../../assets/js/conf/config";
 import {request} from "../../assets/js/libs/request";
 import Css from './search.module.css';
@@ -74,8 +75,13 @@ class SearchComponent extends React.Component {
         localStorage['hk'] = JSON.stringify(this.aKeywords);
         // 存储值到redux
         this.props.dispatch(action.hk.addHistoryKeywords({keywords: this.aKeywords}))
+        this.goPage("goods/search?keywords="+this.aKeywords);
     }
 
+    // 跳转商品选择页面
+    goPage(url) {
+        this.props.history.push(config.path + url);
+    }
     render() {
         return (
             <div style={{display: this.props.pageStyle.display}} className={Css['page']}>
@@ -105,7 +111,7 @@ class SearchComponent extends React.Component {
                         {
                             this.props.state.hk.keywords !== null ? this.props.state.hk.keywords.map((val, key)=>{
                                 return (
-                                    <div key={key} className={Css['keywords']}>{val}</div>
+                                    <div key={key} className={Css['keywords']} onClick={this.goPage.bind(this, `goods/search?keywords=${val}`)}>{val}</div>
                                 )
                             }) : ""
                         }
@@ -122,7 +128,7 @@ class SearchComponent extends React.Component {
                         {
                             this.state.aHotKeyWords.length > 0 ? this.state.aHotKeyWords.map((val, key)=>{
                                 return (
-                                    <div key={key} className={Css['keywords']}>{val.title}</div>
+                                    <div key={key} className={Css['keywords']} onClick={this.goPage.bind(this, `goods/search?keywords=${val.title}`)}>{val.title}</div>
                                 )
                             }) : ""
                         }
@@ -137,4 +143,4 @@ export default connect((state)=>{
     return {
         state: state
     }
-})(SearchComponent);
+})(withRouter(SearchComponent));
