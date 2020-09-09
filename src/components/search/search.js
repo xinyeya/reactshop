@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import config from '../../assets/js/conf/config.js';
 import {request} from "../../assets/js/libs/request";
 import { Modal } from 'antd-mobile';
@@ -54,6 +55,10 @@ class SearchComponent extends React.Component{
         localStorage['hk']=JSON.stringify(this.aKeywords);
         this.props.dispatch(action.hk.addHistoryKeywords({keywords:this.aKeywords}));
         this.setState({bHistory:true});
+        this.goPage("goods/search?keywords="+this.state.keywords)
+    }
+    goPage(url){
+        this.props.history.push(config.path+url);
     }
     render(){
         return(
@@ -77,7 +82,7 @@ class SearchComponent extends React.Component{
                             this.props.state.hk.keywords!=null?
                                 this.props.state.hk.keywords.map((item,index)=>{
                                     return(
-                                        <div key={index} className={Css['keywords']}>{item}</div>
+                                        <div key={index} className={Css['keywords']} onClick={this.goPage.bind(this, 'goods/search?keywords='+item)}>{item}</div>
                                     )
                                 })
                             :''
@@ -93,7 +98,7 @@ class SearchComponent extends React.Component{
                             this.state.aHotKeywords!=null?
                                 this.state.aHotKeywords.map((item,index)=>{
                                     return(
-                                        <div key={index} className={Css['keywords']}>{item.title}</div>
+                                        <div key={index} className={Css['keywords']} onClick={this.goPage.bind(this, 'goods/search?keywords='+item.title)}>{item.title}</div>
                                     )
                                 })
                             :""
@@ -108,4 +113,4 @@ export default connect((state)=>{
     return{
         state:state
     }
-})(SearchComponent)
+})(withRouter(SearchComponent))
