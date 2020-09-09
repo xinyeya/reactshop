@@ -5,7 +5,6 @@ function lazyImg(){
         throttle : 0 //设置图片延迟加载的时间
     });
 }
-
 function localParam(search, hash) {
     search = search || window.location.search;
     hash = hash || window.location.hash;

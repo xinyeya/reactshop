@@ -1,5 +1,4 @@
-import * as historykeywords from "./hkAction";
-
+import * as historykeywords from './hkaction.js';
 export default {
-    hk: historykeywords
+    hk:historykeywords
 }

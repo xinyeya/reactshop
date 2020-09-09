@@ -1,21 +1,13 @@
-import React from "react";
+import React from 'react';
+export default class  IndexComponent extends React.Component{
+    componentDidMount(){
 
-class MyComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
     }
-
-    componentDidMount() {
-    }
-
-    render() {
-        return (
+    render(){
+        return(
             <div>
                 我的
             </div>
         );
     }
 }
-
-export default MyComponent;

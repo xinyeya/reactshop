@@ -1,21 +1,13 @@
-import React from "react";
+import React from 'react';
+export default class  CartIndex extends React.Component{
+    componentDidMount(){
 
-class CartComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
     }
-
-    componentDidMount() {
-    }
-
-    render() {
-        return (
+    render(){
+        return(
             <div>
                 购物车
             </div>
         );
     }
 }
-
-export default CartComponent;

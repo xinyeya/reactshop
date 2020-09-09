@@ -1,31 +1,31 @@
-/*eslint-disable*/
-import React, {lazy, Suspense} from 'react';
-import {HashRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
-import config from './assets/js/conf/config';
-const HomeComponent = lazy(()=>import("./pages/home/home/index"));
-const GoodsClassify = lazy(()=>import("./pages/home/goods/classify"));
-const GoodsSearch = lazy(()=>import("./pages/home/goods/search"));
-
+/*
+ HashRouter:有#号 
+ BrowserRouter:没有#号 
+ Switch:只要匹配到一个地址不往下匹配，相当于for循环里面的break 
+ Link:跳转页面，相当于vue里面的router-link
+exact :完全匹配路由 
+* */
+import React from 'react';
+import  {HashRouter as Router,Route,Switch,Redirect}  from  'react-router-dom';
+//import {PrivateRoute} from './routes/private';
+import asyncComponents from './components/async/AsyncComponent';
+import config from './assets/js/conf/config.js';
+const HomeComponent=asyncComponents(()=>import('./pages/home/home/index'));
+const GoodsClassify=asyncComponents(()=>import('./pages/home/goods/classify'));
 export default class RouterComponent extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {}
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-          <Suspense fallback={<div></div>}>
-              <Router>
-                  <Switch>
-                      <Route path={config.path + "home/index"} component={HomeComponent}/>
-                      <Route path={config.path + "goods/classify"} component={GoodsClassify}/>
-                      <Route path={config.path + "goods/search"} component={GoodsSearch}/>
-                      <Redirect to={config.path + 'home/index'} />
-                  </Switch>
-              </Router>
-          </Suspense>
-      </React.Fragment>
-    );
-  }
+    render(){
+        return(
+            <React.Fragment>
+                <Router>
+                    <React.Fragment>
+                        <Switch>
+                            <Route path={config.path+"home"} component={HomeComponent} ></Route>
+                            <Route path={config.path+"goods/classify"} component={GoodsClassify} ></Route>
+                            <Redirect to={config.path+"home/index"}></Redirect>
+                        </Switch>
+                    </React.Fragment>
+                </Router>
+            </React.Fragment>
+        )
+    }
 }

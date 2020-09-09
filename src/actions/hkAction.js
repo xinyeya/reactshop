@@ -1,10 +1,9 @@
-function addHistoryKeywords(data) {
+function addHistoryKeywords(data){
     return {
-        type: "addHK",
-        data: data
+        type:"addHk",
+        data:data
     }
 }
-
-export {
+export{
     addHistoryKeywords
 }
