@@ -75,3 +75,7 @@ html,body {
 .null-item{width:auto;margin-top:0.2rem;font-size:0.32rem;text-align:center;}
 .am-modal-body{color:#000000 !important;}
 .hide{display:none}
+.height-hide{
+    height: 0px !important;
+    overflow: hidden !important;
+}
