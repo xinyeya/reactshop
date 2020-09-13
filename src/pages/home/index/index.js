@@ -16,7 +16,7 @@ export default class  IndexComponent extends React.Component{
             aRecoGoods:[],
             bScroll:false,
             pageStyle:{display:"none"}
-        }
+        };
         this.bScroll=true;
     }
     componentDidMount(){
@@ -40,6 +40,7 @@ export default class  IndexComponent extends React.Component{
             }
         }
     }
+    // 获取轮播图数据
     getSwiper(){
         request(config.baseUrl+"/api/home/index/slide?token="+config.token).then(res=>{
             if (res.code===200){
@@ -53,6 +54,7 @@ export default class  IndexComponent extends React.Component{
             }
         })
     }
+    // 获取导航数据
     getNav(){
         request(config.baseUrl+"/api/home/index/nav?token="+config.token).then(res=>{
             if (res.code ===200){
@@ -60,6 +62,7 @@ export default class  IndexComponent extends React.Component{
             }
         })
     }
+    // 获取打折商品数据
     getGoodsLevel(){
         request(config.baseUrl+"/api/home/index/goodsLevel?token="+config.token).then(res=>{
             if (res.code ===200){
@@ -69,6 +72,7 @@ export default class  IndexComponent extends React.Component{
             }
         } )
     }
+    // 获取推荐商品数据
     getReco(){
         request(config.baseUrl+"/api/home/index/recom?token="+config.token).then(res=>{
             if (res.code ===200){
@@ -78,18 +82,22 @@ export default class  IndexComponent extends React.Component{
             }
         } )
     }
+    // 跳转路由
     pushPage(pUrl){
         this.props.history.push(config.path+pUrl)
     }
+    // 显示搜索组件
     changeSearch(){
         this.setState({pageStyle:{display:"block"}})
     }
+    // 显示/隐藏搜索组件
     getStyle(val){
         this.setState({pageStyle:val})
     }
     render(){
         return(
             <div className={Css['page']}>
+                {/*头部*/}
                 <div className={this.state.bScroll?Css['search-header']+" "+Css["red-bg"]:Css['search-header']}>
                     <div className={Css['classify-icon']} onClick={this.pushPage.bind(this, "goods/classify/items")}></div>
                     <div className={Css['search-wrap']} onClick={this.changeSearch.bind(this)}>
@@ -100,6 +108,7 @@ export default class  IndexComponent extends React.Component{
                         <div className={Css['login-text']}>登录</div>
                     </div>
                 </div>
+                {/*轮播图*/}
                 <div className={Css['swiper-wrap']}>
                     <div className="swiper-wrapper">
                         {
@@ -113,19 +122,21 @@ export default class  IndexComponent extends React.Component{
                     </div>
                     <div className="swiper-pagination"></div>
                 </div>
+                {/*导航*/}
                 <div className={Css['quick-nav']}>
                     {
                         this.state.aNav!=null?
                         this.state.aNav.map((item,index)=>{
                             return(
                                 <ul key={index} className={Css['item']}>
-                                    <li className={Css['item-img']}><img src={item.image} alt={item.title}/></li>
+                                    <li className={Css['item-img']}><img src={item.image} alt={item.title} onClick={this.pushPage.bind(this, `goods/classify/items?cid=${item.cid}`)}/></li>
                                     <li className={Css['item-text']}>{item.title}</li>
                                 </ul>
                             )
                         }):''
                     }
                 </div>
+                {/*火爆开售*/}
                 {
                     this.state.aGoods!=null?
                         this.state.aGoods.map((item,index)=>{
@@ -137,7 +148,7 @@ export default class  IndexComponent extends React.Component{
                                             {item.items!=null?
                                                 item.items.slice(0,2).map((item2,index2)=>{
                                                     return(
-                                                        <div key={index2}  className={Css['goods-level1-item0']}>
+                                                        <div key={index2}  className={Css['goods-level1-item0']} onClick={this.pushPage.bind(this, `goods/details/item?gid=${item2.gid}`)}>
                                                             <div className={Css['goods-title2']}>{item2.title}</div>
                                                             <div className={Css["goods-text2"]}>火爆开售</div>
                                                             <div className={Css['goods-img2']}><img data-echo={item2.image} src={require("../../../assets/images/common/lazyImg.jpg")} alt={item2.title}/></div>
@@ -146,19 +157,21 @@ export default class  IndexComponent extends React.Component{
                                                 })
                                             :""}
                                         </div>
+                                        // 精品打折
                                         :<div className={Css['goods-level1-wrap']}>
-                                            <div className={Css['goods-level1-item0']}>
+                                            <div className={Css['goods-level1-item0']}  onClick={this.pushPage.bind(this, `goods/details/item?gid=${item.items[0].gid !== null ? item.items[0].gid : ""}`)}>
                                                 <div className={Css['goods-title']}>{item.items!=null?item.items[0].title:''}</div>
                                                 <div className={Css["goods-text"]}>精品打折</div>
                                                 <div className={Css['goods-price'+(index+1)]}>{item.items!=null?item.items[0].price:''}元</div>
                                                 <div className={Css['goods-img']}><img data-echo={item.items!=null?item.items[0].image:''} src={require("../../../assets/images/common/lazyImg.jpg")} alt={item.items!=null?item.items[0].title:''}/></div>
                                             </div>
+                                            {/*精品打折-左边两个*/}
                                             <div className={Css['goods-level1-item1']}>
                                                 {
                                                     item.items!=null?
                                                         item.items.slice(1,3).map((item2,index2)=>{
                                                             return (
-                                                                <div key={index2} className={Css['goods-row']}>
+                                                                <div key={index2} className={Css['goods-row']} onClick={this.pushPage.bind(this, `goods/details/item?gid=${item2.gid}`)}>
                                                                     <div className={Css['goods-row-title']}>{item2.title}</div>
                                                                     <div className={Css['goods-row-text']}>品质精挑</div>
                                                                     <div className={Css['goods-row-img']}><img src={require("../../../assets/images/common/lazyImg.jpg")} data-echo={item2.image}  alt={item2.title}/></div>
@@ -175,7 +188,7 @@ export default class  IndexComponent extends React.Component{
                                             item.items!=null?
                                               item.items.slice(index%2===1?2:3).map((item2,index2)=>{
                                                   return (
-                                                      <div key={index2} className={Css['goods-list']}>
+                                                      <div key={index2} className={Css['goods-list']} onClick={this.pushPage.bind(this, `goods/details/items?gid=${item.gid}`)}>
                                                           <div className={Css['title']}>{item2.title}</div>
                                                           <div className={Css['image']}><img src={require("../../../assets/images/common/lazyImg.jpg")} data-echo={item2.image} alt={item2.title}/></div>
                                                           <div className={Css['price']}>¥{item2.price}</div>
@@ -191,6 +204,7 @@ export default class  IndexComponent extends React.Component{
                         })
                     :""
                 }
+                {/*商品推荐*/}
                 <div className={Css['reco-title-wrap']}>
                     <div className={Css["line"]}></div>
                     <div className={Css['reco-text-wrap']}>
@@ -204,7 +218,7 @@ export default class  IndexComponent extends React.Component{
                         this.state.aRecoGoods!=null?
                             this.state.aRecoGoods.map((item, index)=>{
                                 return (
-                                    <div key={index} className={Css['reco-item']}>
+                                    <div key={index} className={Css['reco-item']} onClick={this.pushPage.bind(this, `goods/details/item?gid=${item.gid}`)}>
                                         <div className={Css['image']}><img src={require("../../../assets/images/common/lazyImg.jpg")} alt={item.title} data-echo={item.image} /></div>
                                         <div className={Css['title']}>{item.title}</div>
                                         <div className={Css['price']}>¥{item.price}</div>

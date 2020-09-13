@@ -3,9 +3,9 @@ import  {Route,Switch}  from  'react-router-dom';
 import asyncComponents from '../../../components/async/AsyncComponent';
 import config from '../../../assets/js/conf/config.js';
 import Css from '../../../assets/css/home/home/index.css';
-const IndexComponent=asyncComponents(()=>import('../index/index'));
-const CartIndex=asyncComponents(()=>import('../cart/index'));
-const UserIndex=asyncComponents(()=>import('../../user/index/index'));
+const IndexComponent = asyncComponents(()=>import('../index/index'));
+const CartIndex = asyncComponents(()=>import('../cart/index'));
+const UserIndex = asyncComponents(()=>import('../../user/index/index'));
 export default class  HomeComponent extends React.Component{
     constructor(props){
         super(props);
@@ -15,17 +15,23 @@ export default class  HomeComponent extends React.Component{
             bMyStyle:false
         }
     }
-    componentWillMount(){
-    }
+
     componentDidMount(){
+        // 调用函数判断路由
         this.handleNavStyle(this.props)
     }
+
     componentWillReceiveProps(newProps){
+        //  调用函数判断路由刷新样式
         this.handleNavStyle(newProps)
     }
+
+    // 跳转路由
     goPage(pUrl){
       this.props.history.replace(config.path+pUrl);
     }
+
+    // 判断路由地址改变底部栏样式
     handleNavStyle(props){
         switch (props.location.pathname){
             case config.path+"home/index":

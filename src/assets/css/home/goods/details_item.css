@@ -1,0 +1,145 @@
+/* 轮播图 */
+.swpier-wrap{width:100%;height:7rem;overflow:hidden;position: relative;z-index:1;margin-top:1.2rem;}
+.swpier-wrap img{width:100%;}
+
+/* 标题头部盒子 */
+.goods-ele-main{
+    width: 90%;
+    height: auto;
+    background-color: #FFFFFF;
+    margin: 0 auto;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+/*标题*/
+.goods-ele-main .goods-title{
+    width: 90%;
+    font-size: 0.28rem;
+}
+/*价格*/
+.goods-ele-main .price{
+    color: #F93036;
+    width: 90%;
+    margin-top: 0.2rem;
+    font-size: 0.32rem;
+}
+/*快递和销量*/
+.goods-ele-main .sales-wrap{
+    width: 90%;
+    font-size: 0.24rem;
+    color: #969696;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    margin-top: 0.2rem;
+}
+
+/*评价盒子*/
+.reviews-main{
+    width: 100%;
+    background-color: #FFFFFF;
+    margin-top: 0.5rem;
+    overflow: hidden;
+    padding-bottom: 1.7rem;
+}
+/*标题*/
+.reviews-main .reviews-title{
+    color: #7b7f82;
+    font-size: 0.32rem;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 0.2rem;
+}
+/*评论内容盒子*/
+.reviews-main .reviews-wrap{
+    width: 90%;
+    margin: 0 auto;
+}
+/*单条评论*/
+.reviews-main .reviews-wrap .reviews-list{
+    width: 100%;
+    margin-top: 0.2rem;
+}
+/*用户信息*/
+.reviews-main .reviews-list .uinfo{
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    height: 0.6rem;
+    align-items: center;
+    -webkit-align-items: center;
+}
+/*头像*/
+.reviews-main .reviews-list .uinfo .head{
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-right: 0.2rem;
+}
+.reviews-main .reviews-list .uinfo .head img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+/*用户昵称*/
+.reviews-main .reviews-list .uinfo .nickname{
+    width: auto;
+    font-size: 0.28rem;
+}
+/*评价内容*/
+.reviews-main .reviews-list .reviews-content{
+    width: 100%;
+    margin: 0 auto;
+    font-size: 0.28rem;
+    margin-top: 0.2rem;
+}
+/*时间*/
+.reviews-main .reviews-list .reviews-date{
+    width: auto;
+    font-size: 0.28rem;
+    color: #7b7f82;
+    margin-top: 0.2rem;
+}
+/*查看更多评价*/
+.reviews-main .reviews-more{
+    width: 2.44rem;
+    height: 0.56rem;
+    border: solid 1px #D50A17;
+    line-height: 0.56rem;
+    text-align: center;
+    font-size: 0.28rem;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    border-radius: 0.1rem;
+}
+
+/*按钮盒子*/
+.bottom-btn-wrap{
+    width: 100%;
+    height: 1.2rem;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    z-index: 10;
+    display: flex;
+    display: -webkit-flex;
+}
+/*按钮样式*/
+.bottom-btn-wrap .btn{
+    width: auto;
+    height: 100%;
+    flex: 1;
+    -webkit-flex: 1;
+    font-size: 0.36rem;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 1.2rem;
+}
+/*橙色*/
+.bottom-btn-wrap .btn.fav{
+    background-color: #FCB401;
+}
+/*收藏的样式*/
+.bottom-btn-wrap .btn.card{
+    background-color: #ff0000;
+}

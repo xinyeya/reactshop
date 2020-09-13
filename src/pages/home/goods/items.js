@@ -9,7 +9,7 @@ export default class  GoodsItems extends React.Component{
         super(props);
         this.state={
             aGoods:[]
-        }
+        };
         this.myScroll=null;
     }
     componentDidMount(){
@@ -18,6 +18,8 @@ export default class  GoodsItems extends React.Component{
     componentWillReceiveProps(newProps){
         this.getData(newProps)
     }
+
+    // 获取数据
     getData(props){
         let cid=props.location.search?localParam(props.location.search).search.cid:'';
         request(config.baseUrl+"/api/home/category/show?cid="+cid+"&token="+config.token).then(res=>{
@@ -34,17 +36,27 @@ export default class  GoodsItems extends React.Component{
             }
         })
     }
+
+    // 初始化scroll，兼容ios
     eventScroll(){
-        document.getElementById("goods-content-main").addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-        this.myScroll= new IScroll('#goods-content-main', {
+        let goodsContentMain = this.refs["goods-content-main"]
+        goodsContentMain.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+        this.myScroll= new IScroll(goodsContentMain, {
             scrollX : false,
             scrollY : true,
             preventDefault : false
         });
     }
+
+    // 跳转商品页面
+    pushPage(pUrl) {
+        console.log(config.path + pUrl);
+        this.props.history.push(config.path + pUrl);
+    }
+
     render(){
         return(
-            <div id="goods-content-main" className={Css['goods-content-main']}>
+            <div ref="goods-content-main" className={Css['goods-content-main']}>
                 <div>
                     {
                         this.state.aGoods.length>0?
@@ -57,7 +69,7 @@ export default class  GoodsItems extends React.Component{
                                                 item.goods!=null?
                                                     item.goods.map((item2, index2)=>{
                                                         return (
-                                                            <ul key={index2}>
+                                                            <ul key={index2} onClick={this.pushPage.bind(this, `goods/details/item?gid=${item2.gid}`)}>
                                                                 <li><img data-echo={item2.image} src={require("../../../assets/images/common/lazyImg.jpg")} alt={item2.title}/></li>
                                                                 <li>{item2.title}</li>
                                                             </ul>

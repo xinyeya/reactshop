@@ -19,23 +19,29 @@ export default class  GoodsClassify extends React.Component{
         this.aTempClassify=[];
         this.cid=props.location.search?localParam(props.location.search).search.cid:'492';
     }
+    // 调用函数获取数据列表
     componentDidMount(){
         this.getClassifyData();
     }
+    // 跳转路由
     replacePage(pUrl){
       this.props.history.replace(config.path+pUrl);
     }
+    // 返回上一层
     goBack(){
         this.props.history.goBack();
     }
+    // 初始化scroll插件
     eventScroll(){
-        document.getElementById("scroll-classify").addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-        this.myScroll= new IScroll('#scroll-classify', {
+        let scrollClassify = this.refs["scroll-classify"];
+        scrollClassify.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+        this.myScroll= new IScroll(scrollClassify, {
             scrollX : false,
             scrollY : true,
             preventDefault : false
         });
     }
+    // 获取分类列表
     getClassifyData(){
         request(config.baseUrl+"/api/home/category/menu?token="+config.token).then(res =>{
             if (res.code ===200){
@@ -50,6 +56,7 @@ export default class  GoodsClassify extends React.Component{
             }
         } );
     }
+    // 点击修改样式并跳转页面
     changeStyle(pUrl,pIndex){
         if (this.aTempClassify.length>0){
             for (let i=0;i<this.aTempClassify.length;i++){
@@ -60,15 +67,22 @@ export default class  GoodsClassify extends React.Component{
         this.handleScroll(pIndex);
         this.replacePage(pUrl);
     }
+    // 下拉插件，兼容IOS
     handleScroll(pIndex){
-        let oScrollClassify=document.getElementById("scroll-classify");
+        // 获取dom
+        let oScrollClassify=this.refs["scroll-classify"];
+        // 获取高度
         let iTopHeight=Math.round(parseInt(this.refs['item-'+pIndex].offsetHeight)*pIndex);
+        // 获取下拉的高度
         let iHalfHeight=Math.round(oScrollClassify.offsetHeight/3);
+        // 计算下拉高度
         let iBottomHeight=oScrollClassify.scrollHeight-iTopHeight;
+        // 如果在不在指定位置则修改高度
         if (iTopHeight>iHalfHeight && iBottomHeight>oScrollClassify.offsetHeight){
             this.myScroll.scrollTo(0,-iTopHeight,300,IScroll.utils.ease.elastic);
         }
     }
+    // 默认样式
     defaultClassifyStyle(){
         if (this.aTempClassify.length>0){
             for (let i=0;i<this.aTempClassify.length;i++){
@@ -80,21 +94,26 @@ export default class  GoodsClassify extends React.Component{
             this.setState({aClassify:this.aTempClassify});
         }
     }
+    // 显示/隐藏搜索组件
     getStyle(val){
         this.setState({pageStyle:val})
     }
+    // 显示搜索组件
     changeSearch(){
         this.setState({pageStyle:{display:"block"}})
     }
+
     render(){
         return(
             <div>
+                {/*头部*/}
                 <div className={Css['search-header']}>
                     <div className={Css['back']} onClick={this.goBack.bind(this)}></div>
                     <div className={Css['search']} onClick={this.changeSearch.bind(this)}>请输入宝贝名称</div>
                 </div>
+                {/* 列表 */}
                 <div className={Css['goods-main']}>
-                    <div id="scroll-classify" className={Css['classify-wrap']}>
+                    <div ref="scroll-classify" className={Css['classify-wrap']}>
                         <div>
                             {
                                 this.state.aClassify!=null?
@@ -107,6 +126,7 @@ export default class  GoodsClassify extends React.Component{
                             }
                         </div>
                     </div>
+                    {/*内容路由*/}
                     <div className={Css['goods-content']}>
                         <Switch>
                             <Route path={config.path+"goods/classify/items"} component={GoodsItems}></Route>

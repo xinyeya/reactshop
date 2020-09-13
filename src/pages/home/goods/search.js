@@ -74,7 +74,8 @@ export default class  GoodsSearch extends React.Component{
 
     componentDidMount(){
         // 兼容IOS的侧边栏
-        this.myScroll = new IScroll("#screen",{
+        let SearchScreen = this.refs['screen']
+        this.myScroll = new IScroll(SearchScreen,{
             scrollX: false,
             scrollY: true,
             preventDefault: false,
@@ -179,7 +180,6 @@ export default class  GoodsSearch extends React.Component{
         // 改变sParams方便下面使用
         this.setParams();
         let url = config.baseUrl + this.sParams+"&page=1&token="+config.token;
-        console.log(url)
         request(url).then(res=>{
             if (res.code === 200) {
                 this.setState({
@@ -473,6 +473,11 @@ export default class  GoodsSearch extends React.Component{
         })
     }
 
+    // 跳转商品详情页
+    pushPage(pUrl) {
+        this.props.history.push(config.path+pUrl);
+    }
+
     render(){
         return(
             <div className={Css['page']}>
@@ -515,7 +520,7 @@ export default class  GoodsSearch extends React.Component{
                         this.state.aGoodsList.length > 0 ?
                         this.state.aGoodsList.map((item, index) => {
                             return (
-                                <div key={index} className={Css['goods-list']}>
+                                <div key={index} className={Css['goods-list']} onClick={this.pushPage.bind(this, `goods/details/item?gid=${item.gid}`)}>
                                     {/*缩略图*/}
                                     <div className={Css['image']}>
                                         <img data-echo={item.image} src={"../../../assets/common/lazyImg.jpg"} alt={item.title}/>
@@ -540,7 +545,7 @@ export default class  GoodsSearch extends React.Component{
                 {/*遮罩层*/}
                 <div ref={'mask'} className={this.state.bMask ? Css['mask'] : Css['mask']+" hide"} onClick={this.hideScreen.bind(this)}></div>
                 {/*抽屉*/}
-                <div ref={'screen'} id={"screen"} className={Css['screen']+ " " +this.state.screenMove}>
+                <div ref={'screen'} className={Css['screen']+ " " +this.state.screenMove}>
                     <div>
                         {/*分类*/}
                         <div className={Css['attr-wrap']}>
