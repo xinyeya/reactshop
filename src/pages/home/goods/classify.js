@@ -102,6 +102,13 @@ export default class  GoodsClassify extends React.Component{
     changeSearch(){
         this.setState({pageStyle:{display:"block"}})
     }
+    // 防止出现内存溢出
+    // 页面离开时自动调用
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            return;
+        }
+    }
 
     render(){
         return(

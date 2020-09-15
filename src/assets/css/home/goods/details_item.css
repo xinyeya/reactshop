@@ -163,6 +163,17 @@
     z-index: 12;
     left: 0px;
     bottom: 0px;
+    transition: transform 0.3s;
+    -webkit-transition: transform 0.3s;
+}
+/*控制面板动画*/
+.cart-panel.up{
+    transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+}
+.cart-panel.down{
+    transform: translateY(120%);
+    -webkit-transform: translateY(120%);
 }
 /*商品信息盒子*/
 .cart-panel .goods-info{

@@ -1,10 +1,12 @@
 import echo from '../libs/echo.js';
+// 图片懒加载
 function lazyImg(){
     echo.init({
         offset : 100,//可是区域多少像素可以被加载
         throttle : 0 //设置图片延迟加载的时间
     });
 }
+// 获取get传值
 function localParam(search, hash) {
     search = search || window.location.search;
     hash = hash || window.location.hash;
@@ -22,7 +24,15 @@ function localParam(search, hash) {
         hash : fn(hash, new RegExp("([^#=&]+)(=([^&]*))?", "g")) || {}
     };
 }
+// 防止白屏，自动把滚动条到最顶端
+function setScrollTop(val = 0) {
+    setTimeout(()=>{
+        document.body.scrollTo = val;
+        document.documentElement.scrollTop = val;
+    },200);
+}
 export {
     lazyImg,
-    localParam
+    localParam,
+    setScrollTop
 }

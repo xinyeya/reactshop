@@ -12,14 +12,67 @@ const DetailsReview = AsyncComponent(()=>import('./details_review'));
 class GoodsDetails extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            gid: props.location.search !== "" ? localParam(props.location.search).search.gid : "",
+            tabStyle: {
+                bItem: true,
+                bContent: false,
+                bReviews: false
+            }
+        }
     }
 
     componentDidMount() {
+        this.setTabStyle(this.props)
     }
 
+    // 判断路由跳转刷新页面
+    componentWillReceiveProps(newProps) {
+        this.setTabStyle(newProps)
+    }
+
+    // 设置选项卡切换的样式
+    setTabStyle(props) {
+        switch (props.location.pathname) {
+            case config.path+"goods/details/item":
+                this.setState({
+                    tabStyle: {bItem: true, bContent: false, bReviews: false}
+                });
+                break;
+            case config.path+"goods/details/content":
+                this.setState({
+                    tabStyle: {bItem: false, bContent: true, bReviews: false}
+                });
+                break;
+            case config.path+"goods/details/review":
+                this.setState({
+                    tabStyle: {bItem: false, bContent: false, bReviews: true}
+                });
+                break;
+            default:
+                this.setState({
+                    tabStyle: {bItem: true, bContent: false, bReviews: false}
+                });
+                break;
+        }
+    }
+
+    // 返回上一页
     goBack() {
         this.props.history.goBack();
+    }
+
+    // 跳转页面
+    replacePage(url) {
+        this.props.history.replace(config.path + url);
+    }
+
+    // 防止出现内存溢出
+    // 页面离开时自动调用
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            return;
+        }
     }
 
     render() {
@@ -31,12 +84,12 @@ class GoodsDetails extends React.Component {
                     <div className={Css['back']} onClick={this.goBack.bind(this)}></div>
                     {/*tab栏*/}
                     <div className={Css['tab-wrap']}>
-                        <div className={Css['tab-name'] + " " + Css['active']}>商品</div>
-                        <div className={Css['tab-name']}>详情</div>
-                        <div className={Css['tab-name']}>评论</div>
+                        <div className={this.state.tabStyle.bItem ? Css['tab-name'] + " " + Css['active'] : Css['tab-name']} onClick={this.replacePage.bind(this, `goods/details/item?gid=${this.state.gid}`)}>商品</div>
+                        <div className={this.state.tabStyle.bContent ? Css['tab-name'] + " " + Css['active'] : Css['tab-name']} onClick={this.replacePage.bind(this, `goods/details/content?gid=${this.state.gid}`)}>详情</div>
+                        <div className={this.state.tabStyle.bReviews ? Css['tab-name'] + " " + Css['active'] : Css['tab-name']} onClick={this.replacePage.bind(this, `goods/details/review?gid=${this.state.gid}`)}>评论</div>
                     </div>
                     {/*购物车*/}
-                    <div className={Css['cart-icon']}>
+                    <div id={"cart-icon"} className={Css['cart-icon']}>
                         <div className={Css['spot']}></div>
                     </div>
                 </div>

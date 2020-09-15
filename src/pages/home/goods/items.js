@@ -54,6 +54,14 @@ export default class  GoodsItems extends React.Component{
         this.props.history.push(config.path + pUrl);
     }
 
+    // 防止出现内存溢出
+    // 页面离开时自动调用
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            return;
+        }
+    }
+
     render(){
         return(
             <div ref="goods-content-main" className={Css['goods-content-main']}>

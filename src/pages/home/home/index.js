@@ -60,6 +60,14 @@ export default class  HomeComponent extends React.Component{
         }
 
     }
+
+    // 防止出现内存溢出
+    // 页面离开时自动调用
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            return;
+        }
+    }
     render(){
         return(
             <div>

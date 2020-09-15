@@ -36,7 +36,6 @@ class SearchComponent extends React.Component{
             }
         })
     }
-
     // 删除历史记录
     clearHistory(){
         Modal.alert('', '确认要删除吗？', [
@@ -70,13 +69,19 @@ class SearchComponent extends React.Component{
             Toast.info("请输入宝贝名称", 2);
         }
     }
-
     // 跳转商品列表页
     goPage(url, keywords){
         if (this.props.isLocal == '1') {
             this.props.childKeywords(keywords)
         }else{
             this.props.history.push(config.path+url);
+        }
+    }
+    // 防止出现内存溢出
+    // 页面离开时自动调用
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            return;
         }
     }
 

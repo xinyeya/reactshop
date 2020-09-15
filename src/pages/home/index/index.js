@@ -2,7 +2,7 @@ import React from 'react';
 import Swiper from '../../../assets/js/libs/swiper.min.js';
 import config from '../../../assets/js/conf/config.js';
 import {request} from '../../../assets/js/libs/request.js';
-import {lazyImg} from '../../../assets/js/utils/util.js';
+import {lazyImg, setScrollTop} from '../../../assets/js/utils/util.js';
 import "../../../assets/css/common/swiper.min.css";
 import Css from '../../../assets/css/home/index/index.css';
 import SearchComponent from '../../../components/search/search';
@@ -24,15 +24,19 @@ export default class  IndexComponent extends React.Component{
         this.getNav();
         this.getGoodsLevel();
         this.getReco();
+        // 重定位滚动条的位置
+        setScrollTop(global.scrollTop.index);
         window.addEventListener("scroll",this.eventScroll.bind(this),false);
     }
     componentWillUnmount(){
         this.bScroll=false;
         window.removeEventListener("scroll",this.eventScroll.bind(this));
     }
+    // 监听下拉高度，改变顶部栏背景颜色
     eventScroll(){
         if (this.bScroll) {
             let iScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            global.scrollTop.index = iScrollTop;
             if (iScrollTop >= 80) {
                 this.setState({bScroll: true})
             } else {
@@ -93,6 +97,13 @@ export default class  IndexComponent extends React.Component{
     // 显示/隐藏搜索组件
     getStyle(val){
         this.setState({pageStyle:val})
+    }
+    // 防止出现内存溢出
+    // 页面离开时自动调用
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            return;
+        }
     }
     render(){
         return(
