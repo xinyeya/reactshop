@@ -5,7 +5,7 @@ import {request} from "../../../assets/js/libs/request";
 import Swiper from '../../../assets/js/libs/swiper.min.js';
 import "../../../assets/css/common/swiper.min.css";
 import Css from '../../../assets/css/home/goods/details_item.css';
-import {localParam, setScrollTop} from "../../../assets/js/utils/util";
+import {lazyImg, localParam, setScrollTop} from "../../../assets/js/utils/util";
 import {Toast} from "antd-mobile";
 import TweenMax from '../../../assets/js/libs/TweenMax';
 
@@ -16,45 +16,15 @@ class DetailsItem extends React.Component {
             bMask: false,
             sCartPanel: Css['down'],
             gid: props.location.search !== "" ? localParam(props.location.search).search.gid : "",
-            aAttr: [
-                {
-                "attrid": "1006",
-                "title": "颜色",
-                "values": [{
-                    "vid": "854",
-                    "value": "红色",
-                    checked:false
-                }, {
-                    "vid": "855",
-                    "value": "白色",
-                    checked:false
-                },
-                    {
-                        "vid": "856",
-                        "value": "黑色",
-                        checked:false
-                    }
-                ]
-            }, {
-                "attrid": "1007",
-                "title": "尺寸",
-                "values": [{
-                    "vid": "857",
-                    "value": "36",
-                    checked:false
-                }, {
-                    "vid": "858",
-                    "value": "72",
-                    checked:false
-                },
-                    {
-                        "vid": "859",
-                        "value": "82",
-                        checked:false
-                    }
-                ]
-            }],
+            aAttr: [],
             iAmount: 1,
+            aSlide: [],
+            sGoodsTitle: '',
+            fPrice: 0,
+            fFreight: 0,
+            iSales: 0,
+            aReviews: [],
+            iReviewTotal: 0
         };
         this.bMove = false
     }
@@ -63,19 +33,69 @@ class DetailsItem extends React.Component {
         // 解决可能会出现的白屏问题
         setScrollTop();
         this.getSwiper();
+        this.getReviews();
     }
 
-    // 初始化轮播图
+    // 获取轮播图数据和获取商品信息
     getSwiper() {
-        new Swiper(this.refs['swpier-wrap'], {
-            autoplay: 3000,
-            pagination : '.swiper-pagination',
-            autoplayDisableOnInteraction : false
+        let sUrl = config.baseUrl+"/api/home/goods/info?gid="+this.state.gid+"&type=details&token="+config.token;
+        request(sUrl).then(res=>{
+            if (res.code === 200) {
+                this.setState({
+                    aSlide: res.data.images,
+                    sGoodsTitle: res.data.title,
+                    fPrice: res.data.price,
+                    fFreight: res.data.freight,
+                    iSales: res.data.sales
+                }, ()=>{
+                    // 初始化轮播图
+                    new Swiper(this.refs['swpier-wrap'], {
+                        autoplay: 3000,
+                        pagination : '.swiper-pagination',
+                        autoplayDisableOnInteraction : false
+                    })
+                })
+            }
+        });
+    }
+
+    // 获取商品规格属性
+    getGoodsAttr() {
+        let sUrl = config.baseUrl+"/api/home/goods/info?gid="+this.state.gid+"&type=spec&token="+config.token
+        request(sUrl).then(res=>{
+            if (res.code === 200) {
+                console.log(res.data);
+                this.setState({
+                    aAttr: res.data
+                })
+            }
+        })
+    }
+
+    // 获取商品评价
+    getReviews() {
+        let sUrl = config.baseUrl+"/api/home/reviews/index?gid="+this.state.gid+"&token="+config.token+"&page=1";
+        request(sUrl).then(res=>{
+            if (res.code === 200) {
+                console.log(res.data)
+                this.setState({
+                    aReviews: res.data,
+                    iReviewTotal: res.pageinfo.total
+                }, ()=>{
+                    lazyImg()
+                })
+            }else{
+                this.setState({
+                    aReviews: [],
+                    iReviewTotal: 0
+                })
+            }
         })
     }
 
     // 显示购物控制面板
     showCartPanel() {
+        this.getGoodsAttr();
         // 禁用遮罩层下的默认事件
         this.refs['mask'].addEventListener('touchmove', function (e) {
             e.preventDefault();
@@ -226,46 +246,57 @@ class DetailsItem extends React.Component {
                 {/*轮播图*/}
                 <div ref="swpier-wrap" className={Css['swpier-wrap']}>
                     <div className="swiper-wrapper">
-                        <div className="swiper-slide"><img src="//vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt=""/></div>
-                        <div className="swiper-slide"><img src="//vueshop.glbuys.com/uploadfiles/1524556419.jpg" alt=""/></div>
-                        <div className="swiper-slide"><img src="//vueshop.glbuys.com/uploadfiles/1524556315.jpg" alt=""/></div>
+                        {
+                            this.state.aSlide.length > 0 ? this.state.aSlide.map((item, index)=>{
+                                return (
+                                        <div key={index} className="swiper-slide">
+                                            <img src={item} alt=""/>
+                                        </div>
+                                    )
+                            }) : ""
+                        }
                     </div>
                     <div className="swiper-pagination"></div>
                 </div>
                 {/*商品介绍*/}
                 <div className={Css['goods-ele-main']}>
                     {/*标题*/}
-                    <div className={Css['goods-title']}>高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带</div>
-                    <div className={Css['price']}>￥128</div>
+                    <div className={Css['goods-title']}>{this.state.sGoodsTitle}</div>
+                    <div className={Css['price']}>￥{this.state.fPrice}</div>
                     <ul className={Css['sales-wrap']}>
-                        <li>快递: 20元</li>
-                        <li>月销量: 0</li>
+                        <li>快递: {this.state.fFreight}元</li>
+                        <li>月销量: {this.state.iSales}</li>
                     </ul>
                 </div>
                 {/*商品评价*/}
                 <div className={Css['reviews-main']}>
-                    <div className={Css['reviews-title']}>商品评价(22)</div>
+                    <div className={Css['reviews-title']}>商品评价({this.state.iReviewTotal})</div>
                     {/*评论内容盒子*/}
                     <div className={Css['reviews-wrap']}>
-                        {/*单条评论*/}
-                        <div className={Css['reviews-list']}>
-                            {/*用户信息*/}
-                            <div className={Css['uinfo']}>
-                                {/*头像*/}
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head//980139409.jpg" alt=""/>
-                                </div>
-                                <div className={Css['nickname']}>神秘人</div>
-                            </div>
-                            {/*评价内容*/}
-                            <div className={Css['reviews-content']}>
-                                评价内容评价内容评价内容评价内容评价内容评价内容评价内容
-                            </div>
-                            {/*时间*/}
-                            <div className={Css['reviews-date']}>
-                                2020-10-25 14:20:20
-                            </div>
-                        </div>
+                        {
+                            this.state.aReviews.length > 0 ? this.state.aReviews.map((item, index)=>{
+                                return (
+                                    <div key={index} className={Css['reviews-list']}>
+                                        {/*用户信息*/}
+                                        <div className={Css['uinfo']}>
+                                            {/*头像*/}
+                                            <div className={Css['head']}>
+                                                <img data-echo={item.head} src={require("../../../assets/images/common/lazyImg.jpg")} alt={item.nickname}/>
+                                            </div>
+                                            <div className={Css['nickname']}>{item.nickname}</div>
+                                        </div>
+                                        {/*评价内容*/}
+                                        <div className={Css['reviews-content']}>
+                                            {item.content}
+                                        </div>
+                                        {/*时间*/}
+                                        <div className={Css['reviews-date']}>
+                                            2020-10-25 14:20:20
+                                        </div>
+                                    </div>
+                                )
+                            }) : ""
+                        }
                         <div className={Css['reviews-list']}>
                             {/*用户信息*/}
                             <div className={Css['uinfo']}>
@@ -363,20 +394,20 @@ class DetailsItem extends React.Component {
                         </div>
                         {/*缩略图*/}
                         <div ref={"goods-img"} className={Css['goods-img']}>
-                            <img src="//vueshop.glbuys.com/uploadfiles/1524556409.jpg" alt=""/>
+                            <img src={this.state.aSlide.length!==0?this.state.aSlide[0]:""} alt=""/>
                         </div>
                         {/*商品信息盒子*/}
                         <div className={Css['goods-wrap']}>
                             <div className={Css['goods-title']}>
-                                高跟鞋女2018新款春季单鞋仙女甜美链子尖头防水台细跟女鞋一字带
+                                {this.state.sGoodsTitle}
                             </div>
                             {/*价格*/}
                             <div className={Css['price']}>
-                                ￥128
+                                ￥{this.state.fPrice}
                             </div>
                             {/*编码*/}
                             <div className={Css['goods-code']}>
-                                商品编码：12342356
+                                商品编码：{this.state.gid}
                             </div>
                         </div>
                     </div>

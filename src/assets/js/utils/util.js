@@ -29,7 +29,7 @@ function setScrollTop(val = 0) {
     setTimeout(()=>{
         document.body.scrollTo = val;
         document.documentElement.scrollTop = val;
-    },200);
+    },100);
 }
 export {
     lazyImg,

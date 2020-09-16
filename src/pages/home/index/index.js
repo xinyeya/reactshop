@@ -70,7 +70,9 @@ export default class  IndexComponent extends React.Component{
     getGoodsLevel(){
         request(config.baseUrl+"/api/home/index/goodsLevel?token="+config.token).then(res=>{
             if (res.code ===200){
-                this.setState({aGoods:res.data},()=>{
+                this.setState({
+                    aGoods:res.data
+                },()=>{
                     lazyImg();
                 })
             }
@@ -139,8 +141,8 @@ export default class  IndexComponent extends React.Component{
                         this.state.aNav!=null?
                         this.state.aNav.map((item,index)=>{
                             return(
-                                <ul key={index} className={Css['item']}>
-                                    <li className={Css['item-img']}><img src={item.image} alt={item.title} onClick={this.pushPage.bind(this, `goods/classify/items?cid=${item.cid}`)}/></li>
+                                <ul key={index} className={Css['item']} onClick={this.pushPage.bind(this, `goods/classify/items?cid=${item.cid}`)}>
+                                    <li className={Css['item-img']}><img src={item.image} alt={item.title}/></li>
                                     <li className={Css['item-text']}>{item.title}</li>
                                 </ul>
                             )
@@ -194,12 +196,13 @@ export default class  IndexComponent extends React.Component{
                                             </div>
                                         </div>
                                     }
+                                    {/*下面四个*/}
                                     <div className={Css['goods-list-wrap']}>
                                         {
                                             item.items!=null?
-                                              item.items.slice(index%2===1?2:3).map((item2,index2)=>{
+                                              item.items.slice(index%2===1?2 : 3).map((item2,index2)=>{
                                                   return (
-                                                      <div key={index2} className={Css['goods-list']} onClick={this.pushPage.bind(this, `goods/details/items?gid=${item.gid}`)}>
+                                                      <div key={index2} className={Css['goods-list']} onClick={this.pushPage.bind(this, `goods/details/item?gid=${item2.gid}`)}>
                                                           <div className={Css['title']}>{item2.title}</div>
                                                           <div className={Css['image']}><img src={require("../../../assets/images/common/lazyImg.jpg")} data-echo={item2.image} alt={item2.title}/></div>
                                                           <div className={Css['price']}>¥{item2.price}</div>

@@ -4,8 +4,9 @@
 
 /* 标题头部盒子 */
 .goods-ele-main{
-    width: 90%;
+    width: 100vw;
     height: auto;
+    padding-left: 0.2rem;
     background-color: #FFFFFF;
     margin: 0 auto;
     padding-top: 0.5rem;
