@@ -64,7 +64,6 @@ class DetailsItem extends React.Component {
         let sUrl = config.baseUrl+"/api/home/goods/info?gid="+this.state.gid+"&type=spec&token="+config.token
         request(sUrl).then(res=>{
             if (res.code === 200) {
-                console.log(res.data);
                 this.setState({
                     aAttr: res.data
                 })
@@ -77,7 +76,6 @@ class DetailsItem extends React.Component {
         let sUrl = config.baseUrl+"/api/home/reviews/index?gid="+this.state.gid+"&token="+config.token+"&page=1";
         request(sUrl).then(res=>{
             if (res.code === 200) {
-                console.log(res.data)
                 this.setState({
                     aReviews: res.data,
                     iReviewTotal: res.pageinfo.total
@@ -291,84 +289,12 @@ class DetailsItem extends React.Component {
                                         </div>
                                         {/*时间*/}
                                         <div className={Css['reviews-date']}>
-                                            2020-10-25 14:20:20
+                                            {item.times}
                                         </div>
                                     </div>
                                 )
-                            }) : ""
+                            }) : <div className={"null-item"}>没有任何评价</div>
                         }
-                        <div className={Css['reviews-list']}>
-                            {/*用户信息*/}
-                            <div className={Css['uinfo']}>
-                                {/*头像*/}
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head//980139409.jpg" alt=""/>
-                                </div>
-                                <div className={Css['nickname']}>神秘人</div>
-                            </div>
-                            {/*评价内容*/}
-                            <div className={Css['reviews-content']}>
-                                评价内容评价内容评价内容评价内容评价内容评价内容评价内容
-                            </div>
-                            {/*时间*/}
-                            <div className={Css['reviews-date']}>
-                                2020-10-25 14:20:20
-                            </div>
-                        </div>
-                        <div className={Css['reviews-list']}>
-                            {/*用户信息*/}
-                            <div className={Css['uinfo']}>
-                                {/*头像*/}
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head//980139409.jpg" alt=""/>
-                                </div>
-                                <div className={Css['nickname']}>神秘人</div>
-                            </div>
-                            {/*评价内容*/}
-                            <div className={Css['reviews-content']}>
-                                评价内容评价内容评价内容评价内容评价内容评价内容评价内容
-                            </div>
-                            {/*时间*/}
-                            <div className={Css['reviews-date']}>
-                                2020-10-25 14:20:20
-                            </div>
-                        </div>
-                        <div className={Css['reviews-list']}>
-                            {/*用户信息*/}
-                            <div className={Css['uinfo']}>
-                                {/*头像*/}
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head//980139409.jpg" alt=""/>
-                                </div>
-                                <div className={Css['nickname']}>神秘人</div>
-                            </div>
-                            {/*评价内容*/}
-                            <div className={Css['reviews-content']}>
-                                评价内容评价内容评价内容评价内容评价内容评价内容评价内容
-                            </div>
-                            {/*时间*/}
-                            <div className={Css['reviews-date']}>
-                                2020-10-25 14:20:20
-                            </div>
-                        </div>
-                        <div className={Css['reviews-list']}>
-                            {/*用户信息*/}
-                            <div className={Css['uinfo']}>
-                                {/*头像*/}
-                                <div className={Css['head']}>
-                                    <img src="//vueshop.glbuys.com/userfiles/head//980139409.jpg" alt=""/>
-                                </div>
-                                <div className={Css['nickname']}>神秘人</div>
-                            </div>
-                            {/*评价内容*/}
-                            <div className={Css['reviews-content']}>
-                                评价内容评价内容评价内容评价内容评价内容评价内容评价内容
-                            </div>
-                            {/*时间*/}
-                            <div className={Css['reviews-date']}>
-                                2020-10-25 14:20:20
-                            </div>
-                        </div>
                     </div>
                     {/*查看更多评价*/}
                     <div className={Css['reviews-more']} onClick={this.replacePage.bind(this, `goods/details/review?gid=${this.state.gid}`)}>
