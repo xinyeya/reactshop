@@ -67,6 +67,11 @@ class GoodsDetails extends React.Component {
         this.props.history.replace(config.path + url);
     }
 
+    // 跳转购物车
+    pushPage(url) {
+        this.props.history.push(config.path + url);
+    }
+
     // 防止出现内存溢出
     // 页面离开时自动调用
     componentWillUnmount() {
@@ -89,7 +94,7 @@ class GoodsDetails extends React.Component {
                         <div className={this.state.tabStyle.bReviews ? Css['tab-name'] + " " + Css['active'] : Css['tab-name']} onClick={this.replacePage.bind(this, `goods/details/review?gid=${this.state.gid}`)}>评论</div>
                     </div>
                     {/*购物车*/}
-                    <div id={"cart-icon"} className={Css['cart-icon']}>
+                    <div id={"cart-icon"} className={Css['cart-icon']} onClick={this.pushPage.bind(this, "home/cart")}>
                         <div className={Css['spot']}></div>
                     </div>
                 </div>

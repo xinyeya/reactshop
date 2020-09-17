@@ -28,7 +28,7 @@ export default class  HomeComponent extends React.Component{
 
     // 跳转路由
     goPage(pUrl){
-      this.props.history.replace(config.path+pUrl);
+      this.props.history.push(config.path+pUrl);
     }
 
     // 判断路由地址改变底部栏样式
