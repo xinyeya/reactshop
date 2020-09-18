@@ -12,7 +12,7 @@ import {Provider} from 'react-redux';
 import reducers from './reducers';
 import './assets/js/conf/global';
 
-let store=createStore(reducers);
+let store = createStore(reducers);
 class Index extends React.Component{
     render(){
         return(

@@ -1,4 +1,6 @@
 import * as historykeywords from './hkaction.js';
+import * as cartaction from './cartactions'
 export default {
-    hk:historykeywords
+    hk:historykeywords,
+    cart: cartaction
 }

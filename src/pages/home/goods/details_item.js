@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom';
+import {connect} from 'react-redux';
+import action from '../../../actions'
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
 import Swiper from '../../../assets/js/libs/swiper.min.js';
@@ -180,6 +182,39 @@ class DetailsItem extends React.Component {
                         // 销毁克隆的节点
                         oCloneImg.remove();
                         this.bMove = false;
+
+                        //将商品添加到redux
+                        let aAttr=[],aParam=[];
+                        if (this.state.aAttr.length>0){
+                            for (let key in this.state.aAttr){
+                                if (this.state.aAttr[key].values.length>0){
+                                    aParam=[];
+                                    for (let key2 in this.state.aAttr[key].values){
+                                        if (this.state.aAttr[key].values[key2].checked){
+                                            aParam.push({
+                                                paramid: this.state.aAttr[key].values[key2].vid,
+                                                title: this.state.aAttr[key].values[key2].value
+                                            })
+                                        }
+                                    }
+                                }
+                                aAttr.push({
+                                    attrid:this.state.aAttr[key].attrid,
+                                    title:this.state.aAttr[key].title,param:aParam
+                                });
+                            }
+                        }
+                        this.props.dispatch(action.cart.addCart({
+                            gid: this.state.gid,
+                            title: this.state.sGoodsTitle,
+                            amount: parseInt(this.state.iAmount),
+                            price: this.state.fPrice,
+                            img: this.state.aSlide[0],
+                            checked: true,
+                            freight: this.state.fFreight,
+                            attrs: aAttr
+                        }));
+                        this.hideCartPanel()
                     }});
                 // 旋转，repeat为-1表示无限旋转
                 TweenMax.to(oCloneImg, 0.2, {rotation: 360, repeat: -1})
@@ -190,7 +225,7 @@ class DetailsItem extends React.Component {
     // 监听件数的值
     changePrice(e) {
         this.setState({
-            iAmount: e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|;|,|+|=|\-|"|'|\/|\\|、|、|。|，|“|”|‘|’]/g, "")
+            iAmount: e.target.value.replace(/[a-zA-Z]|[\u4e00-\u9fa5]|[#|*|;|,|+|=|\-|"|'|\/|\\|、|、|。|，|“|”|‘|’|/\s+]/g, "")
         },()=>{
             if (this.state.iAmount === "") {
                 this.setState({
@@ -390,4 +425,8 @@ class DetailsItem extends React.Component {
     }
 }
 
-export default DetailsItem;
+export default connect((state)=>{
+    return {
+        state
+    };
+})(DetailsItem);

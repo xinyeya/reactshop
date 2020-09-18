@@ -1,10 +1,10 @@
 import React from "react";
 import {Route, Switch, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
 import AsyncComponent from "../../../components/async/AsyncComponent";
 import config from "../../../assets/js/conf/config";
-import {request} from "../../../assets/js/libs/request";
 import Css from "../../../assets/css/home/goods/datails.module.css";
-import {lazyImg, localParam} from "../../../assets/js/utils/util";
+import {localParam} from "../../../assets/js/utils/util";
 const DetailsItem = AsyncComponent(()=>import('./details_item'));
 const DetailsContent = AsyncComponent(()=>import('./details_content'));
 const DetailsReview = AsyncComponent(()=>import('./details_review'));
@@ -95,7 +95,7 @@ class GoodsDetails extends React.Component {
                     </div>
                     {/*购物车*/}
                     <div id={"cart-icon"} className={Css['cart-icon']} onClick={this.pushPage.bind(this, "home/cart")}>
-                        <div className={Css['spot']}></div>
+                        <div className={this.props.state.cart.aCartData.length > 0 ? Css['spot'] : Css['spot'] + " hide"}></div>
                     </div>
                 </div>
                 {/* 路由 */}
@@ -112,4 +112,6 @@ class GoodsDetails extends React.Component {
     }
 }
 
-export default GoodsDetails;
+export default connect(state=>{
+    return {state}
+})(GoodsDetails);

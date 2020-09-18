@@ -1,12 +1,13 @@
 import React from 'react';
-import  {Route,Switch}  from  'react-router-dom';
+import {connect} from 'react-redux';
+import {Route,Switch}  from  'react-router-dom';
 import asyncComponents from '../../../components/async/AsyncComponent';
 import config from '../../../assets/js/conf/config.js';
 import Css from '../../../assets/css/home/home/index.css';
 const IndexComponent = asyncComponents(()=>import('../index/index'));
 const CartIndex = asyncComponents(()=>import('../cart/index'));
 const UserIndex = asyncComponents(()=>import('../../user/index/index'));
-export default class  HomeComponent extends React.Component{
+class  HomeComponent extends React.Component{
     constructor(props){
         super(props);
         this.state={
@@ -86,6 +87,7 @@ export default class  HomeComponent extends React.Component{
                     <ul onClick={this.goPage.bind(this,'home/cart')}>
                         <li className={this.state.bCartStyle?Css['cart']+" "+Css['active']:Css['cart']}></li>
                         <li className={this.state.bCartStyle?Css['text']+" "+Css['active']:Css['text']}>购物车</li>
+                        <li className={this.props.state.cart.aCartData.length > 0 ? Css['spot'] : Css['spot']+" hide"}></li>
                     </ul>
                     <ul onClick={this.goPage.bind(this,'home/my')}>
                         <li className={this.state.bMyStyle?Css['my']+" "+Css['active']:Css['my']}></li>
@@ -96,3 +98,7 @@ export default class  HomeComponent extends React.Component{
         );
     }
 }
+
+export default connect(state=>{
+    return {state}
+})(HomeComponent)

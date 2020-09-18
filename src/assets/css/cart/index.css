@@ -27,7 +27,7 @@
     margin-right: 0.3rem;
 }
 .cart-main .cart-list .select-btn.active{
-    border: none;
+    border: #FFFFFF solid 1px;
     background-image: url("../../../assets/images/home/cart/checkmark.png");
     background-repeat: no-repeat;
     background-size: 100%;
@@ -177,7 +177,7 @@
 }
 .orderend-wrap .select-area .select-wrap .select-btn.active{
     background-image: url("../../../assets/images/home/cart/checkmark.png");
-    border: none;
+    border: #FFFFFF solid 1px;
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center;
@@ -197,7 +197,7 @@
     color: #CC0004;
 }
 
-    /*结算按钮*/
+/*结算按钮*/
 .orderend-wrap .orderend-btn{
     width: auto;
     height: 100%;
@@ -208,4 +208,8 @@
     color: #FFFFFF;
     text-align: center;
     line-height: 1rem;
+}
+
+.orderend-wrap .orderend-btn.disable{
+    background-color: #bfbfbf;
 }
