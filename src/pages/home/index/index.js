@@ -19,6 +19,7 @@ export default class  IndexComponent extends React.Component{
         };
         this.bScroll=true;
     }
+
     componentDidMount(){
         this.getSwiper();
         this.getNav();
@@ -28,10 +29,12 @@ export default class  IndexComponent extends React.Component{
         setScrollTop(global.scrollTop.index);
         window.addEventListener("scroll",this.eventScroll.bind(this),false);
     }
+
     componentWillUnmount(){
         this.bScroll=false;
         window.removeEventListener("scroll",this.eventScroll.bind(this));
     }
+
     // 监听下拉高度，改变顶部栏背景颜色
     eventScroll(){
         if (this.bScroll) {
@@ -44,6 +47,7 @@ export default class  IndexComponent extends React.Component{
             }
         }
     }
+
     // 获取轮播图数据
     getSwiper(){
         request(config.baseUrl+"/api/home/index/slide?token="+config.token).then(res=>{
@@ -58,6 +62,7 @@ export default class  IndexComponent extends React.Component{
             }
         })
     }
+
     // 获取导航数据
     getNav(){
         request(config.baseUrl+"/api/home/index/nav?token="+config.token).then(res=>{
@@ -66,6 +71,7 @@ export default class  IndexComponent extends React.Component{
             }
         })
     }
+
     // 获取打折商品数据
     getGoodsLevel(){
         request(config.baseUrl+"/api/home/index/goodsLevel?token="+config.token).then(res=>{
@@ -78,6 +84,7 @@ export default class  IndexComponent extends React.Component{
             }
         } )
     }
+
     // 获取推荐商品数据
     getReco(){
         request(config.baseUrl+"/api/home/index/recom?token="+config.token).then(res=>{
@@ -88,18 +95,22 @@ export default class  IndexComponent extends React.Component{
             }
         } )
     }
+
     // 跳转路由
     pushPage(pUrl){
         this.props.history.push(config.path+pUrl)
     }
+
     // 显示搜索组件
     changeSearch(){
         this.setState({pageStyle:{display:"block"}})
     }
+
     // 显示/隐藏搜索组件
     getStyle(val){
         this.setState({pageStyle:val})
     }
+
     // 防止出现内存溢出
     // 页面离开时自动调用
     componentWillUnmount() {
@@ -107,6 +118,7 @@ export default class  IndexComponent extends React.Component{
             return;
         }
     }
+
     render(){
         return(
             <div className={Css['page']}>
@@ -118,7 +130,7 @@ export default class  IndexComponent extends React.Component{
                         <div className={Css['search-text']}>请输入宝贝名称</div>
                     </div>
                     <div className={Css['login-wrap']}>
-                        <div className={Css['login-text']}>登录</div>
+                        <div className={Css['login-text']} onClick={this.pushPage.bind(this, 'login/index')}>登录</div>
                     </div>
                 </div>
                 {/*轮播图*/}

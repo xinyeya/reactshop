@@ -1,0 +1,94 @@
+.page{
+    width: 100%;
+    height: 100vh;
+    background-color: #FFFFFF;
+}
+/*主体*/
+.main{
+    width: 100%;
+    padding-top: 1.4rem;
+}
+/*手机号盒子*/
+.cellphone-wrap{
+    width: 90%;
+    height: 0.84rem;
+    margin: 0 auto;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+}
+.cellphone-wrap .cellphone{
+    width: 62%;
+    border: #EFEFEF solid 1px;
+    border-radius: 2px;
+}
+/*输入框*/
+.cellphone-wrap .cellphone input, .code-wrap input, .password-wrap .password input{
+    width: 95%;
+    height: 100%;
+    font-size: 0.28rem;
+    padding-left: 0.2rem;
+}
+
+/*短信验证码盒子*/
+.cellphone-wrap .code-btn{
+    width: 35%;
+    height: 0.8rem;
+    background-color: #EAEAEA;
+    color: #717376;
+    border: #EAEAEA 1px solid;
+    border-radius: 2px;
+    font-size: 0.28rem;
+    text-align: center;
+    line-height: 0.8rem;
+}
+.cellphone-wrap .code-btn.success{
+    background-color: #FFFFFF;
+    border: 1px solid #EB1625;
+    color: #EB1625;
+}
+
+/* 输入短信验证码盒子*/
+.code-wrap{
+    width: 90%;
+    height: 0.84rem;
+    margin: 0 auto;
+    border-radius: 2px;
+    border: 1px solid #EFEFEF;
+    margin-top: 0.4rem;
+}
+/*密码盒子*/
+.password-wrap{
+    width: 90%;
+    height: 0.84rem;
+    margin: 0 auto;
+    border-radius: 2px;
+    border: 1px solid #EFEFEF;
+    margin-top: 0.4rem;
+    display: flex;
+    display: -webkit-flex;
+}
+.password-wrap .password{
+    width: 80%;
+    height: 100%;
+}
+/*开关盒子*/
+.password-wrap .switch-wrap{
+    width: 20%;
+}
+
+
+/*注册按钮*/
+.sure-btn{
+    width: 85%;
+    height: 0.8rem;
+    margin: 0 auto;
+    background-color: #EB1625;
+    font-size: 0.36rem;
+    color: #FFFFFF;
+    line-height: 0.8rem;
+    text-align: center;
+    margin-top: 0.4rem;
+    border-radius: 4px;
+}
