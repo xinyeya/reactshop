@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Swiper from '../../../assets/js/libs/swiper.min.js';
 import config from '../../../assets/js/conf/config.js';
 import {request} from '../../../assets/js/libs/request.js';
@@ -6,7 +7,7 @@ import {lazyImg, setScrollTop} from '../../../assets/js/utils/util.js';
 import "../../../assets/css/common/swiper.min.css";
 import Css from '../../../assets/css/home/index/index.css';
 import SearchComponent from '../../../components/search/search';
-export default class  IndexComponent extends React.Component{
+class  IndexComponent extends React.Component{
     constructor(){
         super();
         this.state = {
@@ -130,7 +131,9 @@ export default class  IndexComponent extends React.Component{
                         <div className={Css['search-text']}>请输入宝贝名称</div>
                     </div>
                     <div className={Css['login-wrap']}>
-                        <div className={Css['login-text']} onClick={this.pushPage.bind(this, 'login/index')}>登录</div>
+                        {
+                            this.props.state.user.isLogin ? <div className={Css['my']} onClick={this.pushPage.bind(this, 'home/my')}></div> : <div className={Css['login-text']} onClick={this.pushPage.bind(this, 'login/index')}>登录</div>
+                        }
                     </div>
                 </div>
                 {/*轮播图*/}
@@ -259,3 +262,9 @@ export default class  IndexComponent extends React.Component{
         );
     }
 }
+
+export default connect(state=>{
+    return {
+        state
+    }
+})(IndexComponent);

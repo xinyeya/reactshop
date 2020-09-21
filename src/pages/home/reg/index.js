@@ -22,7 +22,7 @@ class RegIndex extends React.Component {
     }
 
     componentDidMount() {
-        this.isSameCellphone()
+        document.getElementById("title").innerHTML = "会员注册"
     }
 
     // 检查手机号是否合法
@@ -119,6 +119,7 @@ class RegIndex extends React.Component {
             return false;
         }
 
+        // 确定注册
         let sUrl = config.baseUrl+"/api/home/user/reg?token="+config.token;
         request(sUrl, "post", {
             vcode: this.state.sCode,
@@ -207,6 +208,7 @@ class RegIndex extends React.Component {
                         {/*显示/隐藏密码*/}
                         <div className={Css['switch-wrap']}>
                             <Switch
+                                color={"#EB1625"}
                                 checked={this.state.checked}
                                 onClick={this.changePwd.bind(this, !this.state.checked)}
                             />

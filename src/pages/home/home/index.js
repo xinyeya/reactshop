@@ -4,6 +4,8 @@ import {Route,Switch}  from  'react-router-dom';
 import asyncComponents from '../../../components/async/AsyncComponent';
 import config from '../../../assets/js/conf/config.js';
 import Css from '../../../assets/css/home/home/index.css';
+import {AuthRoute} from "../../../routes/private";
+
 const IndexComponent = asyncComponents(()=>import('../index/index'));
 const CartIndex = asyncComponents(()=>import('../cart/index'));
 const UserIndex = asyncComponents(()=>import('../../user/index/index'));
@@ -76,7 +78,7 @@ class  HomeComponent extends React.Component{
                     <Switch>
                         <Route path={config.path+"home/index"} component={IndexComponent} ></Route>
                         <Route path={config.path+"home/cart"} component={CartIndex} ></Route>
-                        <Route path={config.path+"home/my"} component={UserIndex} ></Route>
+                        <AuthRoute path={config.path+"home/my"} component={UserIndex} ></AuthRoute>
                     </Switch>
                 </React.Fragment>
                 <div className={Css['bottom-nav']}>

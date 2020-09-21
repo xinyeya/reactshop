@@ -1,4 +1,6 @@
 import ReactDOM from 'react-dom';
+import {fetch} from "whatwg-fetch";
+
 let oLoad=ReactDOM.findDOMNode(document.getElementById("page-load"));
 // 发起get请求
 function request(pUrl, pType='GET'.toLocaleLowerCase(), data={}){
@@ -19,7 +21,6 @@ function request(pUrl, pType='GET'.toLocaleLowerCase(), data={}){
             }
             params = params.slice(1)
         }
-        console.log(params.slice(1));
         config = {
             method: pType,
             headers: headers,

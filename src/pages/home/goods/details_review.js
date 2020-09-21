@@ -1,4 +1,4 @@
-import React, {lazy} from "react";
+import React from "react";
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
 import Css from "../../../assets/css/home/goods/details_reviews.css";
