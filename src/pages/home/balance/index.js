@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Css from '../../../assets/css/home/balance/index.css'
 import SubHeaderComponent from "../../../components/header/subheader";
 import {safeAuth} from "../../../assets/js/utils/util";
+import config from "../../../assets/js/conf/config";
 
 class BalanceIndex extends React.Component {
     constructor(props) {
@@ -12,6 +13,11 @@ class BalanceIndex extends React.Component {
     }
 
     componentDidMount() {
+    }
+
+    // 跳转页面
+    pushPage(url) {
+        this.props.history.push(config.path+url)
     }
 
     // 防止内存泄露
@@ -29,7 +35,7 @@ class BalanceIndex extends React.Component {
                 {/*主体*/}
                 <div className={Css['main']}>
                     {/*地址*/}
-                    <div className={Css['address-wrap']}>
+                    <div className={Css['address-wrap']} onClick={this.pushPage.bind(this, "address/index")}>
                         {/*用户地址信息*/}
                         <div className={Css['persion-info']}>
                             <span>收货人: 王五</span>
