@@ -129,6 +129,8 @@
     height: 0.4rem;
     overflow: hidden;
     font-size: 0.28rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .goods-wrap .goods-list .goods-param .attr{
     width: 100%;
@@ -136,6 +138,9 @@
     font-size: 0.2rem;
     margin-top: 0.1rem;
     color: #868686;
+}
+.goods-wrap .goods-list .goods-param .attr span{
+    padding-right: 0.3rem;
 }
 .goods-wrap .goods-list .goods-param .amount{
     font-size: 0.24rem;

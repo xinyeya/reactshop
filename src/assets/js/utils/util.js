@@ -40,14 +40,14 @@ function setScrollTop(val = 0) {
 
 // 会员登录安全验证
 function safeAuth(props) {
-    let sUrl = config.baseUrl+"/api/home/safe?token="+config.token;
+    let sUrl = config.baseUrl+"/api/home/user/safe?token="+config.token;
     request(sUrl, "post", {
-        uid: this.props.state.user.uid,
-        auth_token: this.props.state.user.authToken
+        uid: props.state.user.uid,
+        auth_token: props.state.user.authToken
     }).then(res=>{
-        if (res.code === 200) {
-            this.props.dispatch(action.user.outLogin());
-            this.props.history.replace(config.path+"login/index")
+        if (res.code !== 200) {
+            props.dispatch(action.user.outLogin());
+            props.history.replace(config.path+"login/index")
         }
     })
 }

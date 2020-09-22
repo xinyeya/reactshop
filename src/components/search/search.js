@@ -54,7 +54,7 @@ class SearchComponent extends React.Component{
         let skeywords = this.state.keywords.replace(/^\s*|\s*$/g, "") || "";
         let pkeywords = this.state.keywords ? this.state.keywords.replace(/^\s*|\s*$/g, "") : "";
 
-        if (skeywords != "" || pkeywords != "") {
+        if (skeywords !== "" || pkeywords !== "") {
             for (let i=0;i<this.aKeywords.length;i++){
                 if (this.aKeywords[i]===this.state.keywords){
                     this.aKeywords.splice(i--,1);
@@ -71,7 +71,7 @@ class SearchComponent extends React.Component{
     }
     // 跳转商品列表页
     goPage(url, keywords){
-        if (this.props.isLocal == '1') {
+        if (this.props.isLocal === '1') {
             this.props.childKeywords(keywords)
         }else{
             this.props.history.push(config.path+url);

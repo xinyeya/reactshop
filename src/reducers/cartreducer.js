@@ -1,8 +1,8 @@
 // 要传回去的值
 let cartData = {
-    aCartData: localStorage['cartData'] !=undefined ? JSON.parse(localStorage['cartData']) : [],
-    total: localStorage['total'] !=undefined ? parseFloat(localStorage['total']) : 0,
-    freight: 0
+    aCartData: localStorage['cartData'] !== undefined ? JSON.parse(localStorage['cartData']) : [],
+    total: localStorage['total'] !== undefined ? parseFloat(localStorage['total']) : 0,
+    freight: localStorage['freight'] !== undefined ? parseFloat(localStorage['freight']) : 0
 };
 // 对要传回去的的数据做处理
 function cartReducer(state=cartData,action){
