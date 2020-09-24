@@ -17,12 +17,15 @@ class  IndexComponent extends React.Component{
 
     // 安全退出
     outLogin() {
-        let sUrl = config+"/api/home/user/safeout?token="+config.token;
+        let sUrl = config.baseUrl+"/api/home/user/safeout?token="+config.token;
         request(sUrl, "post", {
             uid: this.props.state.user.uid
         }).then(res=>{
             if (res.code === 200) {
+                // 清理缓存
                 this.props.dispatch(action.user.outLogin());
+                // 清空购物车
+                this.props.dispatch(action.cart.clearCart());
                 this.props.history.replace(config.path+"login/index");
             }
         })

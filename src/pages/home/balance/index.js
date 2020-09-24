@@ -4,20 +4,70 @@ import Css from '../../../assets/css/home/balance/index.css'
 import SubHeaderComponent from "../../../components/header/subheader";
 import {safeAuth} from "../../../assets/js/utils/util";
 import config from "../../../assets/js/conf/config";
+import {request} from "../../../assets/js/libs/request";
 
 class BalanceIndex extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            sName: '',
+            sCellphone: '',
+            sProvince: '',
+            sCity: '',
+            sArea: '',
+            sAddress: ''
+        };
         safeAuth(props);
     }
 
     componentDidMount() {
+        if (sessionStorage['addressId']!==undefined) {
+            this.getSelectAddress();
+        }else{
+            this.getDefaultAddress();
+        }
     }
 
     // 跳转页面
-    pushPage(url) {
-        this.props.history.push(config.path+url)
+    replacePage(url) {
+        this.props.history.replace(config.path+url)
+    }
+
+    // 获取收货地址
+    getSelectAddress() {
+        if (sessionStorage['addressId'] !== undefined) {
+            let sUrl = config.baseUrl+"/api/user/address/info?uid="+this.props.state.user.uid+"&aid="+sessionStorage['addressId']+"&token="+config.token;
+            request(sUrl).then(res=>{
+                if (res.code === 200) {
+                    localStorage['addressId'] = res.data.aid;
+                    this.setState({
+                        sName: res.data.name,
+                        sCellphone: res.data.sCellphone,
+                        sProvince: res.data.province,
+                        sCity: res.data.city,
+                        sArea: res.data.area,
+                        sAddress: res.data.address
+                    });
+                }
+            })
+        }
+    }
+
+    // 获取默认收货地址
+    getDefaultAddress() {
+        let sUrl = config.baseUrl + "/api/user/address/defaultAddress?uid="+this.props.state.user.uid+"&token="+config.token;
+        request(sUrl).then(res=>{
+            if (res.code === 200) {
+                this.setState({
+                    sName: res.data.name,
+                    sCellphone: res.data.sCellphone,
+                    sProvince: res.data.province,
+                    sCity: res.data.city,
+                    sArea: res.data.area,
+                    sAddress: res.data.address
+                });
+            }
+        })
     }
 
     // 防止内存泄露
@@ -35,17 +85,30 @@ class BalanceIndex extends React.Component {
                 {/*主体*/}
                 <div className={Css['main']}>
                     {/*地址*/}
-                    <div className={Css['address-wrap']} onClick={this.pushPage.bind(this, "address/index")}>
-                        {/*用户地址信息*/}
-                        <div className={Css['persion-info']}>
-                            <span>收货人: 王五</span>
-                            <span>13717628483</span>
-                        </div>
-                        {/*收货地址*/}
-                        <div className={Css['address']}>
-                            <img src={require('../../../assets/images/home/cart/map.png')} alt="收货地址"/>
-                            <span>天津和平区核平西里</span>
-                        </div>
+                    <div className={Css['address-wrap']} onClick={this.replacePage.bind(this, "address/index")}>
+                        {
+                            sessionStorage['addressId'] !== undefined ||
+                            localStorage['addressId'] !== undefined
+                                ? <React.Fragment>
+                                {/*用户地址信息*/}
+                                <div className={Css['persion-info']}>
+                                    <span>收货人: {this.state.sName}</span>
+                                    <span>{this.state.sCellphone}</span>
+                                </div>
+                                {/*收货地址*/}
+                                <div className={Css['address']}>
+                                    <img src={require('../../../assets/images/home/cart/map.png')} alt="收货地址"/>
+                                    <span>{this.state.sProvince} {this.state.sCity} {this.state.sArea} {this.state.sAddress}</span>
+                                </div>
+                            </React.Fragment>
+                                :
+                            <React.Fragment>
+                                {/*如果没有收货地址*/}
+                                <div className={Css['address-null']}>
+                                    您的收货地址为空，点击添加收货地址
+                                </div>
+                            </React.Fragment>
+                        }
                         {/*箭头*/}
                         <div className={Css['arrow']}></div>
                         {/*分割线盒子*/}

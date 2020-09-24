@@ -57,6 +57,11 @@
     width: 100%;
     height: auto;
 }
+
+.main .address-list .address-info-wrap .address-info span:nth-child(1){
+    margin-right: 0.2rem;
+}
+
 .main .address-list .persion{
     width: 100%;
     height: 0.5rem;

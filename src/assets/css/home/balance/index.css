@@ -17,6 +17,21 @@
     z-index: 1;
 }
 
+/*没有收货地址*/
+.address-wrap .address-null{
+    width: auto;
+    height: auto;
+    font-size: 0.32rem;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    display: table;
+    margin-top: 0.2rem;
+}
+
 /*用户地址信息*/
 .address-wrap .persion-info{
     width: auto;

@@ -108,10 +108,12 @@ class DetailsItem extends React.Component {
 
     // 关闭购物车面板
     hideCartPanel() {
-        this.setState({
-            bMask: false,
-            sCartPanel: Css['down']
-        })
+        if (!this.bMove) {
+            this.setState({
+                bMask: false,
+                sCartPanel: Css['down']
+            });
+        }
     }
 
     // 加入收藏
@@ -161,7 +163,6 @@ class DetailsItem extends React.Component {
         this.checkAttrVal(()=>{
             // 判断动画是否正在执行
             if (!this.bMove) {
-                this.bMove = true;
                 // 获取dom
                 let oGoodsImg = this.refs['goods-img'],
                     oGoodsInfo = this.refs['goods-info'],
@@ -218,6 +219,7 @@ class DetailsItem extends React.Component {
                     }});
                 // 旋转，repeat为-1表示无限旋转
                 TweenMax.to(oCloneImg, 0.2, {rotation: 360, repeat: -1})
+                this.bMove = true;
             }
         });
     }

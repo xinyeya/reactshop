@@ -28,6 +28,9 @@ function cartReducer(state=cartData,action){
         case "changeAmount":
             changeAmount(state, action.data);
             return Object.assign({}, state, action);
+        case "clearCart":
+            clearCart(state, action.data);
+            return Object.assign({}, state, action);
         default:
             return state;
     }
@@ -134,7 +137,7 @@ function changeAmount(state, action) {
 }
 
 // 计算运费
-function setFreight(state, action) {
+function setFreight(state) {
     let aFreight = [];
     for (let key in state.aCartData) {
         if (state.aCartData[key].checked) {
@@ -144,6 +147,16 @@ function setFreight(state, action) {
     // 取出最大值
     state.freight = Math.max.apply(null, aFreight);
     localStorage['freight'] = state.freight;
+}
+
+// 清空购物车
+function clearCart(state, action) {
+    localStorage.removeItem('cartData');
+    localStorage.removeItem('total');
+    localStorage.removeItem('freight');
+    state.aCartData = [];
+    state.total = 0;
+    state.freight = 0;
 }
 
 export default cartReducer;

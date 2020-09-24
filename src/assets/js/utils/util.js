@@ -47,6 +47,7 @@ function safeAuth(props) {
     }).then(res=>{
         if (res.code !== 200) {
             props.dispatch(action.user.outLogin());
+            props.dispatch(action.cart.clearCart());
             props.history.replace(config.path+"login/index")
         }
     })

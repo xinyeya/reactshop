@@ -54,6 +54,14 @@ function changeAmount(data) {
     }
 }
 
+// 清空购物车
+function clearCart(data) {
+    return {
+        type: "clearCart",
+        data: data
+    }
+}
+
 export{
     addCart,
     delItem,
@@ -61,5 +69,6 @@ export{
     setAllChecked,
     incAmount,
     decAmount,
-    changeAmount
+    changeAmount,
+    clearCart
 }

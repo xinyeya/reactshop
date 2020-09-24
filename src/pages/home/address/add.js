@@ -72,6 +72,11 @@ class AddressAdd extends React.Component {
         };
         request(url, "post", data).then(res=>{
             if (res.code === 200) {
+                // 如果添加的是默认地址，则直接存储到缓存里
+                if (this.state.bChecked) {
+                    localStorage['addressId'] = res.data.aid;
+                    sessionStorage.removeItem('addressId');
+                }
                 Toast.info('添加成功', 1, ()=>{
                     this.props.history.replace(config.path+"address/index");
                 });

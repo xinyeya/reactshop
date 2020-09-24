@@ -20,6 +20,7 @@ function userReducer(state=defaultState,action){
             localStorage.removeItem("nickname");
             localStorage.removeItem('authToken');
             localStorage.removeItem('isLogin');
+            sessionStorage.removeItem('addressId');
             state.uid = "";
             state.nickname = "";
             state.authToken = "";

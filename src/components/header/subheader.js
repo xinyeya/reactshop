@@ -1,6 +1,7 @@
 import React from 'react';
 import Css from './subheader.css';
 import {withRouter} from 'react-router';
+import config from "../../assets/js/conf/config";
 class SubHeaderComponent extends React.Component{
     constructor(props) {
         super(props);
@@ -21,7 +22,11 @@ class SubHeaderComponent extends React.Component{
 
     // 返回上一页
     goBack() {
-        this.props.history.goBack()
+        if (this.props.location.pathname === config.path+'address/index') {
+            this.props.history.replace(config.path+'balance/index')
+        }else{
+            this.props.history.goBack()
+        }
     }
 
     render(){
