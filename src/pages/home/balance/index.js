@@ -5,6 +5,7 @@ import SubHeaderComponent from "../../../components/header/subheader";
 import {safeAuth} from "../../../assets/js/utils/util";
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
+import {Toast} from "antd-mobile";
 
 class BalanceIndex extends React.Component {
     constructor(props) {
@@ -68,6 +69,20 @@ class BalanceIndex extends React.Component {
                 });
             }
         })
+    }
+
+    // 提交收货地址
+    submitOrder() {
+        let sAddressId = sessionStorage['addressId'] || localStorage['addressId'];
+        if (sAddressId !== undefined) {
+            if (this.props.state.cart.total > 0) {
+
+            } else {
+                Toast.info("您的购物车还没有商品", 1);
+            }
+        }else{
+            Toast.info("请选择收货地址", 1)
+        }
     }
 
     // 防止内存泄露
@@ -185,7 +200,7 @@ class BalanceIndex extends React.Component {
                     <div className={Css['price-wrap']}>
                         <span>实付金额: </span><span>￥{parseFloat(Math.round(this.props.state.cart.total+this.props.state.cart.freight).toFixed(2))}</span>
                     </div>
-                    <div className={Css['balance-btn']}>
+                    <div className={Css['balance-btn']} onClick={this.submitOrder.bind(this)}>
                         提交订单
                     </div>
                 </div>
