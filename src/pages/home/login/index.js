@@ -57,7 +57,8 @@ class LoginIndex extends React.Component {
                     this.props.dispatch(action.user.login({
                         uid: res.data.uid,
                         nickname: res.data.nickname,
-                        authToken: res.data.auth_token
+                        authToken: res.data.auth_token,
+                        isLogin: true
                     }));
                     this.bSubmit = false;
                     this.props.history.goBack()

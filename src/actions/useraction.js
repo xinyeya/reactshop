@@ -1,8 +1,8 @@
 // 接收组件传递的值
 function login(data) {
     return {
-        type:"login",
-        data:data
+        type: "login",
+        data: data
     }
 }
 
