@@ -16,6 +16,7 @@ class LoginIndex extends React.Component {
             sPassword: '',
             sType: 'password'
         };
+        this.bSubmit = true;
     }
 
     componentDidMount() {
@@ -41,27 +42,30 @@ class LoginIndex extends React.Component {
             return false;
         }
 
-        // 点击登录
-        let sUrl = config.baseUrl+"/api/home/user/pwdlogin?token="+config.token;
-        request(sUrl, "post", {
-            cellphone: this.state.sCellphone,
-            password: this.state.sPassword
-        }).then(res=>{
-            if (res.code === 200) {
-                localStorage['uid'] = res.data.uid;
-                localStorage['nickname'] = res.data.nickname;
-                localStorage['authToken'] = res.data.auth_token;
-                localStorage['isLogin'] = true;
-                this.props.dispatch(action.user.login({
-                    uid: res.data.uid,
-                    nickname: res.data.nickname,
-                    authToken: res.data.auth_token
-                }));
-                this.props.history.goBack()
-            }else{
-                Toast.info(res.data, 2)
-            }
-        })
+        if (this.bSubmit) {
+            // 点击登录
+            let sUrl = config.baseUrl+"/api/home/user/pwdlogin?token="+config.token;
+            request(sUrl, "post", {
+                cellphone: this.state.sCellphone,
+                password: this.state.sPassword
+            }).then(res=>{
+                if (res.code === 200) {
+                    localStorage['uid'] = res.data.uid;
+                    localStorage['nickname'] = res.data.nickname;
+                    localStorage['authToken'] = res.data.auth_token;
+                    localStorage['isLogin'] = true;
+                    this.props.dispatch(action.user.login({
+                        uid: res.data.uid,
+                        nickname: res.data.nickname,
+                        authToken: res.data.auth_token
+                    }));
+                    this.bSubmit = false;
+                    this.props.history.goBack()
+                }else{
+                    Toast.info(res.data, 2)
+                }
+            })
+        }
     }
 
     // 显示/隐藏密码

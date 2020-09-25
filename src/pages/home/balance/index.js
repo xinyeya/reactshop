@@ -18,6 +18,7 @@ class BalanceIndex extends React.Component {
             sArea: '',
             sAddress: ''
         };
+        this.bSubmit = true;
         safeAuth(props);
     }
 
@@ -76,7 +77,22 @@ class BalanceIndex extends React.Component {
         let sAddressId = sessionStorage['addressId'] || localStorage['addressId'];
         if (sAddressId !== undefined) {
             if (this.props.state.cart.total > 0) {
-
+                if (this.bSubmit) {
+                    let sUrl = config.baseUrl+"/api/order/add?token="+config.token;
+                    let sAddressId = sessionStorage['addressId'] || localStorage['addressId'];
+                    let jData = {
+                        uid: this.props.state.user.uid,
+                        freight: this.props.state.cart.freight,
+                        addsid: sAddressId,
+                        goodsData: JSON.stringify(this.props.state.cart.aCartData)
+                    };
+                    request(sUrl, "post", jData).then(res=>{
+                        if (res.code === 200) {
+                            this.props.history.push(config.path+"balance/end");
+                        }
+                    });
+                    this.bSubmit = false;
+                }
             } else {
                 Toast.info("您的购物车还没有商品", 1);
             }

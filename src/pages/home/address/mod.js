@@ -98,7 +98,7 @@ class AddressMod extends React.Component {
             if (res.code === 200) {
                 // 如果添加的是默认地址，则直接存储到缓存里
                 if (this.state.bChecked) {
-                    localStorage['addressId'] = res.data.aid;
+                    localStorage['addressId'] = this.aid;
                     sessionStorage.removeItem('addressId');
                 }else{
                     localStorage.removeItem("addressId");

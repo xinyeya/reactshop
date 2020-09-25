@@ -19,7 +19,8 @@ class AddressAdd extends React.Component {
             sCellphone: "",
             sAddress: "",
             bChecked: false
-        }
+        };
+        this.bSubmit = true;
     }
 
     componentDidMount() {
@@ -70,20 +71,25 @@ class AddressAdd extends React.Component {
             address: this.state.sAddress,
             isdefault: this.state.bChecked?"1":"0"
         };
-        request(url, "post", data).then(res=>{
-            if (res.code === 200) {
-                // 如果添加的是默认地址，则直接存储到缓存里
-                if (this.state.bChecked) {
-                    localStorage['addressId'] = res.data.aid;
-                    sessionStorage.removeItem('addressId');
+
+        // 防止重复提交
+        if (this.bSubmit) {
+            this.bSubmit = false;
+            request(url, "post", data).then(res=>{
+                if (res.code === 200) {
+                    // 如果添加的是默认地址，则直接存储到缓存里
+                    if (this.state.bChecked) {
+                        localStorage['addressId'] = res.data.aid;
+                        sessionStorage.removeItem('addressId');
+                    }
+                    Toast.info('添加成功', 1, ()=>{
+                        this.props.history.replace(config.path+"address/index");
+                    });
+                }else{
+                    Toast.info(res.data, 2)
                 }
-                Toast.info('添加成功', 1, ()=>{
-                    this.props.history.replace(config.path+"address/index");
-                });
-            }else{
-                Toast.info(res.data, 2)
-            }
-        })
+            })
+        }
     }
 
     render() {

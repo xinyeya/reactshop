@@ -19,6 +19,7 @@ class RegIndex extends React.Component {
         };
         this.timer = null;
         this.bSendCode = true;
+        this.bSubmit = true;
     }
 
     componentDidMount() {
@@ -119,17 +120,21 @@ class RegIndex extends React.Component {
             return false;
         }
 
-        // 确定注册
-        let sUrl = config.baseUrl+"/api/home/user/reg?token="+config.token;
-        request(sUrl, "post", {
-            vcode: this.state.sCode,
-            cellphone: this.state.sCellphone,
-            password: this.state.sPassword
-        }).then(res=>{
-            if (res.code === 200) {
-                this.props.history.goBack();
-            }
-        })
+        // 防止重复提交
+        if (this.bSubmit) {
+            this.bSubmit = false;
+            // 确定注册
+            let sUrl = config.baseUrl+"/api/home/user/reg?token="+config.token;
+            request(sUrl, "post", {
+                vcode: this.state.sCode,
+                cellphone: this.state.sCellphone,
+                password: this.state.sPassword
+            }).then(res=>{
+                if (res.code === 200) {
+                    this.props.history.goBack();
+                }
+            })
+        }
     }
 
     // 显示/隐藏密码
