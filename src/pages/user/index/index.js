@@ -102,19 +102,19 @@ class  IndexComponent extends React.Component{
                 {/*订单*/}
                 <div className={Css['order-name-wrap']}>
                     <div className={Css['order-name']}>全部订单</div>
-                    <div className={Css['show-order']}>查看全部订单 &gt;</div>
+                    <div className={Css['show-order']} onClick={this.pushPage.bind(this, "myorder/order?status=all")}>查看全部订单 &gt;</div>
                 </div>
                 {/*订单状态*/}
                 <div className={Css['order-status-wrap']}>
-                    <div className={Css['item']}>
+                    <div className={Css['item']} onClick={this.pushPage.bind(this, "myorder/order?status=0")}>
                         <div className={Css['icon']+" "+Css['wait']}></div>
                         <div className={Css['text']}>待支付</div>
                     </div>
-                    <div className={Css['item']}>
+                    <div className={Css['item']} onClick={this.pushPage.bind(this, "myorder/order?status=1")}>
                         <div className={Css['icon']+" "+Css['take']}></div>
                         <div className={Css['text']}>待收货</div>
                     </div>
-                    <div className={Css['item']}>
+                    <div className={Css['item']} onClick={this.pushPage.bind(this, "myorder/review?status=2")}>
                         <div className={Css['icon']+" "+Css['comment']}></div>
                         <div className={Css['text']}>待评价</div>
                     </div>
