@@ -29,12 +29,17 @@ class SubHeaderComponent extends React.Component{
         }
     }
 
+    // 向父组件传值
+    getClick() {
+        this.props['onClickRightBtn']();
+    }
+
     render(){
         return(
             <div className={Css['sub-header']}>
                 <div className={Css['back']} onClick={this.goBack.bind(this)}></div>
                 <div className={Css['text']}>{this.props.title}</div>
-                <div className={this.props['right-text']?Css['right-btn']:Css['right-btn'] + " hide"}>{this.props['right-text']}</div>
+                <div className={this.props['right-text']?Css['right-btn']:Css['right-btn'] + " hide"} onClick={this.getClick.bind(this)}>{this.props['right-text']}</div>
             </div>
         );
     }

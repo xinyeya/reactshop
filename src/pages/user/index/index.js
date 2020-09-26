@@ -60,12 +60,24 @@ class  IndexComponent extends React.Component{
             request(sUrl).then(res => {
                 if (res.code === 200) {
                     this.setState({
-                        sHead: res.data.head,
+                        sHead: res.data.head !=="" ? res.data.head : this.state.sHead,
                         sNickname: res.data.nickname,
                         iPoints: res.data.points
                     })
                 }
             })
+        }
+    }
+
+    // 跳转页面
+    pushPage(url) {
+        this.props.history.push(config.path+url);
+    }
+
+    // 关闭页面后清除数据防止内存溢出
+    componentWillUnmount() {
+        this.setState = (state, callback) => {
+            return;
         }
     }
 
@@ -109,7 +121,7 @@ class  IndexComponent extends React.Component{
                 </div>
                 {/*菜单*/}
                 <div className={Css['menu-list-wrap']}>
-                    <ul>
+                    <ul onClick={this.pushPage.bind(this, 'profile/index')}>
                         <li>个人资料</li>
                         <li></li>
                     </ul>

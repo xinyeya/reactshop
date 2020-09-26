@@ -6,7 +6,19 @@ let oLoad=ReactDOM.findDOMNode(document.getElementById("page-load"));
 function request(pUrl, pType='GET'.toLocaleLowerCase(), data={}){
     showLoad();
     let config = {}, headers = {}, params = '';
-    if (pType === "get".toLocaleLowerCase()) {
+    if (pType === "file".toLocaleLowerCase()) {
+        pType="post";
+        if (data instanceof Object) {
+            params = new FormData();
+            for (let key in data) {
+                params.append(key, data[key]);
+            }
+        }
+        config = {
+            method: pType,
+            body: params
+        }
+    } else if (pType === "get".toLocaleLowerCase()) {
         config = {
             method: pType
         }
