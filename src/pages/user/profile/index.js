@@ -5,10 +5,12 @@ import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
 import SubHeaderComponent from "../../../components/header/subheader";
 import { ActionSheet, Toast } from 'antd-mobile';
+import {AuthRoute} from "../../../routes/private";
 
 class  ProfileIndex extends React.Component{
     constructor(props) {
         super(props);
+        AuthRoute(props);
         this.state={
             sHead: require("../../../assets/images/user/my/default-head.png"),
             sNickname: '昵称',

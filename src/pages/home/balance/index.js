@@ -60,6 +60,7 @@ class BalanceIndex extends React.Component {
         let sUrl = config.baseUrl + "/api/user/address/defaultAddress?uid="+this.props.state.user.uid+"&token="+config.token;
         request(sUrl).then(res=>{
             if (res.code === 200) {
+                localStorage['addressId'] = res.data.aid;
                 this.setState({
                     sName: res.data.name,
                     sCellphone: res.data.sCellphone,

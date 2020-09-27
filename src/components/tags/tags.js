@@ -22,7 +22,20 @@ class TagComponent extends React.Component {
     }
 
     replacePage(url) {
-        this.props.history.replace(config.path+url);
+        // 由于使用componentWillReceiveProps太耗费性能
+        // 跳转中转页面
+        this.props.history.replace(config.path+"transfer");
+        // 重新刷新页面
+        setTimeout(()=>{
+            this.props.history.replace(config.path+url);
+        }, 10);
+    }
+
+    // 防止内存泄露
+    componentWillUnmount() {
+        this.setState = (state, callback)=>{
+            return;
+        }
     }
 
     render() {
