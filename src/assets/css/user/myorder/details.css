@@ -1,0 +1,203 @@
+.page{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #FFFFFF;
+}
+.main{
+    width: 100%;
+    padding-top: 1.02rem;
+}
+/*订单编号*/
+.ordernum{
+    width: auto;
+    height: auto;
+    font-size: 0.28rem;
+    padding-left: 2%;
+    padding-top: 0.2rem;
+}
+
+/*地址盒子*/
+.address-wrap{
+    width: 100%;
+    margin-top: 0.4rem;
+}
+/*四边形盒子*/
+.address-wrap .skew-wrap{
+    width: 100%;
+    height: 0.08rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+}
+/*单个小盒子*/
+.address-wrap .skew-wrap .skew{
+    width: 5%;
+    height: 100%;
+    transform: skew(-40deg, 0deg);
+    -webkit-transform: skew(-40deg, 0deg);
+    background-color: #A2DAFB;
+}
+/*地址信息*/
+.address-wrap .address-info{
+    width: 100%;
+    height: 2rem;
+    background-color: #FFFAF0;
+    position: relative;
+    z-index: 1;
+}
+.address-wrap .address-info .name{
+    width: auto;
+    height: auto;
+    position: absolute;
+    z-index: 1;
+    left: 2%;
+    top: 0.3rem;
+    font-size: 0.28rem;
+}
+.address-wrap .address-info .name img, .address-wrap .address-info .cellphone img{
+    width: 0.4rem;
+    height: 0.4rem;
+    vertical-align: middle;
+}
+.address-wrap .address-info .cellphone{
+    width: auto;
+    height: auto;
+    position: absolute;
+    right: 10%;
+    top: 0.3rem;
+    font-size: 0.28rem;
+}
+.address-wrap .address-info .address{
+    width: 95%;
+    height: 0.8rem;
+    overflow: hidden;
+    font-size: 0.28rem;
+    position: absolute;
+    left: 2%;
+    z-index: 1;
+    top: 1.2rem;
+    color: #848689;
+}
+/*购买的宝贝标题*/
+.buy-title{
+    width: 100%;
+    height: 0.8rem;
+    border-bottom: 1px solid #EFEFEF;
+    font-size: 0.28rem;
+    line-height: 0.8rem;
+    padding-left: 2%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.goods-list{
+    width: 96%;
+    height: 1.6rem;
+    border-bottom: 1px solid #EFEFEF;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    align-content: center;
+    -webkit-align-items: center;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+.goods-list .image{
+    width: 1.2rem;
+    height: 1.2rem;
+}
+.goods-list .image img{
+    width: 100%;
+    height: 100%;
+}
+.goods-list .goods-info{
+    width: 65%;
+    height: auto;
+}
+.goods-list .goods-info .title{
+    width: 100%;
+    height: 0.8rem;
+    font-size: 0.2rem;
+}
+.goods-list .goods-info .attr{
+    width: 100%;
+    height: auto;
+    font-size: 0.24rem;
+    margin-top: 0.2rem;
+}
+.goods-list .goods-info .attr .amount{
+    color: #848689;
+}
+.goods-list .goods-info .attr span{
+    padding-right: 0.3rem;
+}
+.goods-list .price{
+    font-size: 0.28rem;
+}
+
+/*支付状态*/
+.order-status{
+    width: 100%;
+    height: 0.8rem;
+    border-bottom: 1px solid #EFEFEF;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    align-content: center;
+    -webkit-align-items: center;
+    font-size: 0.28rem;
+    padding-left: 2%;
+    padding-right: 2%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+/*商品总额*/
+.total-wrap{
+    width: 100%;
+    height: 1.4rem;
+    border-bottom: 1px solid #EFEFEF;
+}
+.total-wrap .total{
+    width: 100%;
+    height: auto;
+    font-size: 0.28rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    align-items: center;
+    -webkit-align-items: center;
+    padding-left: 2%;
+    padding-right: 2%;
+    box-sizing: border-box;
+    margin-top: 0.3rem;
+}
+.total-wrap .total li:nth-child(2){
+    color: #F15353;
+}
+
+/*实付金额*/
+.true-total{
+    width: 100%;
+    height: 1rem;
+}
+.true-total .total{
+    width: auto;
+    text-align: right;
+    padding-right: 2%;
+    margin-top: 0.3rem;
+}
+.true-total .total span{
+    color: #F15353;
+}
+.true-total .order-time{
+    width: auto;
+    text-align: right;
+    font-size: 0.24rem;
+    padding-right: 2%;
+    margin-top: 0.1rem;
+    color: #848689;
+}
