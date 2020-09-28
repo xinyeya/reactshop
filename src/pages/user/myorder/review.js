@@ -67,6 +67,11 @@ class ReviewPage extends React.Component {
         })
     }
 
+    // 跳转页面
+    pushPage(url) {
+        this.props.history.push(config.path+url);
+    }
+
     // 防止内存泄露
     componentWillUnmount() {
         this.oUpRefresh = null;
@@ -83,7 +88,7 @@ class ReviewPage extends React.Component {
                     this.state.aOrder.length > 0?
                         this.state.aOrder.map((item, index)=>{
                             return (
-                                <div className={Css['order-list']} key={index}>
+                                <div className={Css['order-list']} key={index} onClick={this.pushPage.bind(this, 'order/detail?ordernum='+item.ordernum)}>
                                     {/*订单编号盒子*/}
                                     <div className={Css['ordernum-wrap']}>
                                         <div className={Css['order']}>订单编号: {item.ordernum}</div>
