@@ -112,7 +112,10 @@ class ReviewPage extends React.Component {
                                                         × {item1.amount}
                                                     </div>
                                                     {/*按钮*/}
-                                                    <div className={Css['status-btn']}>
+                                                    <div className={Css['status-btn']} onClick={e=>{
+                                                        e.stopPropagation();
+                                                        this.pushPage("order/add_review?gid="+item1.gid+"&ordernum="+item.ordernum)
+                                                    }}>
                                                         {
                                                             item1.isreview === '0' ? "评价" : "追加评价"
                                                         }
