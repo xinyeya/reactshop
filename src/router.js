@@ -19,6 +19,7 @@ const MyOrder = asyncComponents(()=>import("./pages/user/myorder/index"));
 const Transfer = asyncComponents(()=>import("./pages/transfer/index"));
 const OrderDetail = asyncComponents(()=>import('./pages/user/myorder/detail'));
 const AddReview = asyncComponents(()=>import('./pages/user/myorder/add_review'));
+const UserAddressIndex = asyncComponents(()=>import('./pages/user/address/index'));
 
 export default class RouterComponent extends React.Component{
     render(){
@@ -43,6 +44,7 @@ export default class RouterComponent extends React.Component{
                             <AuthRoute path={config.path+"myorder"} component={MyOrder} ></AuthRoute>
                             <AuthRoute path={config.path+"order/detail"} component={OrderDetail} ></AuthRoute>
                             <AuthRoute path={config.path+"order/add_review"} component={AddReview} ></AuthRoute>
+                            <AuthRoute path={config.path+"user/address"} component={UserAddressIndex} ></AuthRoute>
                             <Redirect to={config.path+"home/index"}></Redirect>
                         </Switch>
                     </React.Fragment>
