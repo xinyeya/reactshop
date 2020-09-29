@@ -83,7 +83,7 @@ class AddressAdd extends React.Component {
                         sessionStorage.removeItem('addressId');
                     }
                     Toast.info('添加成功', 1, ()=>{
-                        this.props.history.replace(config.path+"address/index");
+                        this.props.history.goBack();
                     });
                 }else{
                     Toast.info(res.data, 2)

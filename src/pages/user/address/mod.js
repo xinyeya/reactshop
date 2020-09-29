@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from 'react-redux';
 import SubHeaderComponent from "../../../components/header/subheader";
 import Css from '../../../assets/css/home/address/add.css';
-import {Picker, Toast} from 'antd-mobile';
+import {Modal, Picker, Toast} from 'antd-mobile';
 import config from "../../../assets/js/conf/config";
 import {province} from '../../../assets/data/province';
 import {request} from "../../../assets/js/libs/request";
@@ -22,7 +22,6 @@ class AddressMod extends React.Component {
             bChecked: false
         };
         this.aid = localParam(props.location.search).search.aid;
-        this.defaultProvince = []
     }
 
     componentDidMount() {
@@ -50,7 +49,7 @@ class AddressMod extends React.Component {
                     sAddress: res.data.address,
                     bChecked: res.data.isdefault === '1' ? true : false,
                     defaultProvince: `${res.data.province} ${res.data.city} ${res.data.area}`
-                });
+                })
             }
         })
     }
@@ -112,10 +111,37 @@ class AddressMod extends React.Component {
         })
     }
 
+    // 删除数据
+    delData() {
+        Modal.alert("", "你确定要删除吗?", [
+            {text: "取消", onPress: ()=>{}, style: "default"},
+            {text: "确定", onPress: ()=>{
+                    let url = config.baseUrl+"/api/user/address/del?uid="+this.props.state.user.uid+"&aid="+this.aid+"&token="+config.token;
+                    request(url).then(res=>{
+                        if (res.code === 200) {
+                            if (this.aid === sessionStorage['addressId']) {
+                                sessionStorage.removeItem("addressId");
+                            }
+                            if (this.aid === localStorage['addressId']) {
+                                localStorage.removeItem("addressId");
+                            }
+                            Toast.info(res.data, 2);
+                            this.props.history.goBack();
+                        }
+                    })
+                }
+            }
+        ])
+    }
+
     render() {
         return (
             <div className={Css['page']}>
-                <SubHeaderComponent title={"修改收货地址"}></SubHeaderComponent>
+                <SubHeaderComponent
+                    title={"修改收货地址"}
+                    right-text={"删除"}
+                    onClickRightBtn={this.delData.bind(this)}
+                ></SubHeaderComponent>
                 {/*主体*/}
                 <div className={Css['main']}>
                     <ul>
@@ -177,7 +203,7 @@ class AddressMod extends React.Component {
                             }}/>
                         </li>
                     </ul>
-                    <button type={"button"} className={Css['submit-save']} onClick={this.submitData.bind(this)}>保存</button>
+                    <button type={"button"} className={Css['submit-save']} onClick={this.submitData.bind(this)}>修改</button>
                 </div>
             </div>
         );

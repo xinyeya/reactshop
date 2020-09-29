@@ -125,7 +125,7 @@ class  IndexComponent extends React.Component{
                         <li>个人资料</li>
                         <li></li>
                     </ul>
-                    <ul>
+                    <ul onClick={this.pushPage.bind(this, 'user/address/index')}>
                         <li>收货地址</li>
                         <li></li>
                     </ul>
