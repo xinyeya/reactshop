@@ -129,7 +129,7 @@ class  IndexComponent extends React.Component{
                         <li>收货地址</li>
                         <li></li>
                     </ul>
-                    <ul>
+                    <ul onClick={this.pushPage.bind(this, 'user/mobile/index')}>
                         <li>绑定手机</li>
                         <li></li>
                     </ul>
