@@ -1,0 +1,43 @@
+.page{
+    width: 100%;
+    min-height: 100vh;
+    background-color: #FFFFFF;
+    overflow: hidden;
+}
+.main{
+    width: 100%;
+    padding-top: 1.02rem;
+}
+.main .input-wrap{
+    width: 93%;
+    height: 0.8rem;
+    border: #c5cbcf solid 1px;
+    border-radius: 4px;
+    margin: 0 auto;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+}
+.main .input-wrap .password{
+    width: 75%;
+    height: 100%;
+    margin-left: 0.2rem;
+    font-size: 0.28rem;
+}
+/*开关盒子*/
+.password-wrap .switch-wrap{
+    width: 20%;
+}
+.main .save-btn{
+    width: 93%;
+    height: 0.8rem;
+    background-color: #E42321;
+    color: #FFFFFF;
+    font-size: 0.28rem;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 0.8rem;
+    margin: 0 auto;
+    margin-top: 0.2rem;
+}
