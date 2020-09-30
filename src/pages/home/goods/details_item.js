@@ -118,7 +118,14 @@ class DetailsItem extends React.Component {
 
     // 加入收藏
     addFav() {
-        Toast.info('收藏成功', 2);
+        let url = config.baseUrl+"/api/goods/fav?uid="+this.props.state.user.uid+"&gid="+this.state.gid+"&token="+config.token;
+        request(url).then(res=>{
+            if (res.code === 200) {
+                Toast.info(res.data, 2);
+            }else{
+                Toast.info(res.data, 2);
+            }
+        });
     }
 
     // 跳转路由
