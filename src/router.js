@@ -1,5 +1,5 @@
 import React from 'react';
-import  {HashRouter as Router,Route,Switch,Redirect}  from  'react-router-dom';
+import {BrowserRouter as Router,Route,Switch,Redirect}  from  'react-router-dom';
 import asyncComponents from './components/async/AsyncComponent';
 import {AuthRoute} from "./routes/private";
 import config from './assets/js/conf/config.js';

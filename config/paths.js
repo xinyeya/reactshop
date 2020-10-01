@@ -34,7 +34,8 @@ const getPublicUrl = appPackageJson =>
 function getServedPath(appPackageJson) {
   const publicUrl = getPublicUrl(appPackageJson);
   const servedUrl =
-    envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/');
+    //  配置文件夹路由，hash直接改这里，history需要配置路由重定向文件 .htaccess
+    envPublicUrl || (publicUrl ? url.parse(publicUrl).pathname : '/shop/');
   return ensureSlash(servedUrl, true);
 }
 
