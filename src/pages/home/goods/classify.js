@@ -5,7 +5,7 @@ import config from '../../../assets/js/conf/config.js';
 import IScroll from '../../../assets/js/libs/iscroll.js';
 import Css from '../../../assets/css/home/goods/classify.css';
 import {request} from "../../../assets/js/libs/request";
-import {localParam} from "../../../assets/js/utils/util";
+import {isSystem, localParam, setScrollTop} from "../../../assets/js/utils/util";
 import SearchComponent from '../../../components/search/search';
 const GoodsItems=asyncComponents(()=>import('./items'));
 export default class  GoodsClassify extends React.Component{
@@ -21,6 +21,7 @@ export default class  GoodsClassify extends React.Component{
     }
     // 调用函数获取数据列表
     componentDidMount(){
+        setScrollTop();
         this.getClassifyData();
     }
     // 跳转路由
@@ -130,6 +131,9 @@ export default class  GoodsClassify extends React.Component{
                                         )
                                     })
                                 :""
+                            }
+                            {
+                                isSystem() === 1?<div style={{width:"100%",height: "1.6rem"}}></div>:<div style={{width:"100%",height: "0.2rem"}}></div>
                             }
                         </div>
                     </div>

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import AsyncComponent from "../../../components/async/AsyncComponent";
 import config from "../../../assets/js/conf/config";
 import Css from "../../../assets/css/home/goods/datails.module.css";
-import {localParam} from "../../../assets/js/utils/util";
+import {localParam, setScrollTop} from "../../../assets/js/utils/util";
 const DetailsItem = AsyncComponent(()=>import('./details_item'));
 const DetailsContent = AsyncComponent(()=>import('./details_content'));
 const DetailsReview = AsyncComponent(()=>import('./details_review'));
@@ -23,6 +23,7 @@ class GoodsDetails extends React.Component {
     }
 
     componentDidMount() {
+        setScrollTop();
         this.setTabStyle(this.props)
     }
 

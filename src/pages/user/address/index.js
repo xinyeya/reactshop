@@ -4,6 +4,7 @@ import Css from "../../../assets/css/user/address/index.css";
 import SubHeaderComponent from "../../../components/header/subheader";
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
+import {setScrollTop} from "../../../assets/js/utils/util";
 
 class UserAddressIndex extends React.Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class UserAddressIndex extends React.Component {
     }
 
     componentDidMount() {
+        setScrollTop();
         this.getData();
     }
 

@@ -5,7 +5,7 @@ import SubHeaderComponent from "../../../components/header/subheader";
 import {Modal, Toast} from "antd-mobile";
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
-import {lazyImg, safeAuth} from "../../../assets/js/utils/util";
+import {lazyImg, safeAuth, setScrollTop} from "../../../assets/js/utils/util";
 import Uprefresh from '../../../assets/js/libs/uprefresh';
 
 class MyFav extends React.Component {
@@ -22,6 +22,7 @@ class MyFav extends React.Component {
     }
 
     componentDidMount() {
+        setScrollTop();
         this.getData();
     }
 

@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from 'react-redux';
 import Css from '../../../assets/css/home/balance/end.css'
 import SubHeaderComponent from "../../../components/header/subheader";
-import {safeAuth} from "../../../assets/js/utils/util";
+import {safeAuth, setScrollTop} from "../../../assets/js/utils/util";
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
 import action from '../../../actions/index'
@@ -17,6 +17,7 @@ class BalanceEnd extends React.Component {
     }
 
     componentDidMount() {
+        setScrollTop();
         this.getOrdernum();
     }
 

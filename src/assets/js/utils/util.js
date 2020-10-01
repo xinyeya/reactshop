@@ -53,9 +53,37 @@ function safeAuth(props) {
     })
 }
 
+// 判断平台
+function isSystem(){
+    var isWeixin=/micromessenger/i.test(navigator.userAgent);
+    var isQQ=/QQ/i.test(navigator.userAgent);
+    var isAndroid=/Android/i.test(navigator.userAgent);
+    var isIphone=/iphone/i.test(navigator.userAgent);
+    var isPCWindow=/window/i.test(navigator.userAgent);
+    var isPCMac=/mac/i.test(navigator.userAgent);
+    if(isWeixin){
+        return 0;
+    }
+    else if(isIphone && !isQQ){
+        return 1;
+    }
+    else if(isAndroid && !isQQ){
+        return  2;
+    }
+    else if(isPCWindow){
+        return 3;
+    }
+    else if(isPCMac && !isQQ){
+        return 4;
+    }else if(isQQ){
+        return 5;
+    }
+}
+
 export {
     lazyImg,
     localParam,
     setScrollTop,
-    safeAuth
+    safeAuth,
+    isSystem
 }

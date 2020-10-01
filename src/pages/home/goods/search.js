@@ -6,7 +6,7 @@ import Uprefresh from '../../../assets/js/libs/uprefresh';
 import Css from '../../../assets/css/home/goods/search.css';
 import "../../../assets/css/common/public.css";
 import SearchComponent from "../../../components/search/search";
-import {lazyImg, localParam} from "../../../assets/js/utils/util";
+import {lazyImg, localParam, setScrollTop} from "../../../assets/js/utils/util";
 export default class  GoodsSearch extends React.Component{
     constructor(props){
         super(props);
@@ -73,8 +73,9 @@ export default class  GoodsSearch extends React.Component{
     }
 
     componentDidMount(){
+        setScrollTop();
         // 兼容IOS的侧边栏
-        let SearchScreen = this.refs['screen']
+        let SearchScreen = this.refs['screen'];
         this.myScroll = new IScroll(SearchScreen,{
             scrollX: false,
             scrollY: true,

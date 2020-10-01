@@ -6,6 +6,7 @@ import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
 import SubHeaderComponent from "../../../components/header/subheader";
 import {Modal} from "antd-mobile";
+import {setScrollTop} from "../../../assets/js/utils/util";
 
 class  IndexComponent extends React.Component{
     constructor(props) {
@@ -18,6 +19,7 @@ class  IndexComponent extends React.Component{
     }
 
     componentDidMount(){
+        setScrollTop();
         this.getUserInfo();
     }
 

@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from 'react-redux';
 import Css from '../../../assets/css/home/balance/index.css'
 import SubHeaderComponent from "../../../components/header/subheader";
-import {safeAuth} from "../../../assets/js/utils/util";
+import {safeAuth, setScrollTop} from "../../../assets/js/utils/util";
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
 import {Toast} from "antd-mobile";
@@ -23,6 +23,7 @@ class BalanceIndex extends React.Component {
     }
 
     componentDidMount() {
+        setScrollTop();
         if (sessionStorage['addressId']!==undefined) {
             this.getSelectAddress();
         }else{

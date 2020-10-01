@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import config from "../../../assets/js/conf/config";
 import SubHeaderComponent from "../../../components/header/subheader";
 import Css from '../../../assets/css/home/address/index.css'
-import {safeAuth} from "../../../assets/js/utils/util";
+import {safeAuth, setScrollTop} from "../../../assets/js/utils/util";
 import {Modal, Toast} from "antd-mobile";
 import {request} from "../../../assets/js/libs/request";
 
@@ -17,6 +17,7 @@ class AddressIndex extends React.Component {
     }
 
     componentDidMount() {
+        setScrollTop();
         this.getAddress();
     }
 

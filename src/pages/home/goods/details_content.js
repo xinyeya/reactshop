@@ -2,7 +2,7 @@ import React from "react";
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
 import Css from "../../../assets/css/home/goods/details_content.css";
-import {localParam} from "../../../assets/js/utils/util";
+import {localParam, setScrollTop} from "../../../assets/js/utils/util";
 
 class DetailsContent extends React.Component {
     constructor(props) {
@@ -14,11 +14,9 @@ class DetailsContent extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.state.gid)
+        setScrollTop();
         let sUrl = config.baseUrl+"/api/home/goods/info?gid="+this.state.gid+"&type=details&token="+config.token;
-        // console.log(sUrl);
         request(sUrl).then(res=>{
-            // console.log(res)
             if (res.code === 200) {
                 this.setState({
                     bodys: res.data.bodys

@@ -4,6 +4,7 @@ import {request} from "../../../assets/js/libs/request";
 import IScroll from '../../../assets/js/libs/iscroll.js';
 import {lazyImg,localParam} from '../../../assets/js/utils/util.js';
 import Css from '../../../assets/css/home/goods/items.css';
+import {isSystem, setScrollTop} from "../../../assets/js/utils/util";
 export default class  GoodsItems extends React.Component{
     constructor(props){
         super(props);
@@ -13,6 +14,7 @@ export default class  GoodsItems extends React.Component{
         this.myScroll=null;
     }
     componentDidMount(){
+        setScrollTop();
         this.getData(this.props);
     }
     componentWillReceiveProps(newProps){
@@ -50,7 +52,6 @@ export default class  GoodsItems extends React.Component{
 
     // 跳转商品页面
     pushPage(pUrl) {
-        console.log(config.path + pUrl);
         this.props.history.push(config.path + pUrl);
     }
 
@@ -90,6 +91,9 @@ export default class  GoodsItems extends React.Component{
                                 )
                             })
                             :<div className="null-item">没有相关商品！</div>
+                    }
+                    {
+                        isSystem() === 1?<div style={{width:"100%",height: "1rem"}}></div>:<div style={{width:"100%",height: "0.2rem"}}></div>
                     }
                 </div>
             </div>

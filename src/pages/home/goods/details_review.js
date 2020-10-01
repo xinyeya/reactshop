@@ -2,7 +2,7 @@ import React from "react";
 import config from "../../../assets/js/conf/config";
 import {request} from "../../../assets/js/libs/request";
 import Css from "../../../assets/css/home/goods/details_reviews.css";
-import {lazyImg, localParam} from "../../../assets/js/utils/util";
+import {lazyImg, localParam, setScrollTop} from "../../../assets/js/utils/util";
 import Uprefresh from "../../../assets/js/libs/uprefresh";
 
 class DetailsReviews extends React.Component {
@@ -20,6 +20,7 @@ class DetailsReviews extends React.Component {
     }
 
     componentDidMount() {
+        setScrollTop();
         this.getReviews()
     }
 

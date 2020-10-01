@@ -6,6 +6,7 @@ import {Picker, Toast} from 'antd-mobile';
 import config from "../../../assets/js/conf/config";
 import {province} from '../../../assets/data/province';
 import {request} from "../../../assets/js/libs/request";
+import {setScrollTop} from "../../../assets/js/utils/util";
 
 class AddressAdd extends React.Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class AddressAdd extends React.Component {
     }
 
     componentDidMount() {
+        setScrollTop();
     }
 
     // 防止内存泄露

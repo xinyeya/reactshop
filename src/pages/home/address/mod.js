@@ -6,7 +6,7 @@ import {Picker, Toast} from 'antd-mobile';
 import config from "../../../assets/js/conf/config";
 import {province} from '../../../assets/data/province';
 import {request} from "../../../assets/js/libs/request";
-import {localParam} from "../../../assets/js/utils/util";
+import {localParam, setScrollTop} from "../../../assets/js/utils/util";
 
 class AddressMod extends React.Component {
     constructor(props) {
@@ -26,6 +26,7 @@ class AddressMod extends React.Component {
     }
 
     componentDidMount() {
+        setScrollTop();
         this.getAddress();
     }
 
